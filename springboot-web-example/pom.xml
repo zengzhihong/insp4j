@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>cn.is4j.insp</groupId>
 			<artifactId>insp4j-web</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 

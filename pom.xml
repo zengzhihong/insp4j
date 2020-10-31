@@ -22,7 +22,7 @@
 
     <groupId>cn.is4j.insp</groupId>
     <artifactId>insp4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>insp4j-core</module>
@@ -36,8 +36,8 @@
     <url>http://insp.is4j.cn</url>
 
     <scm>
-        <url>https://github.com/imcoder-cloud/imcoder-base</url>
-        <connection>https://github.com/imcoder-cloud/imcoder-base.git</connection>
+        <url>https://github.com/zengzhihong/insp4j</url>
+        <connection>https://github.com/zengzhihong/insp4j.git</connection>
     </scm>
 
     <developers>
@@ -69,6 +69,7 @@
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
 
         <spring-boot.version>2.3.5.RELEASE</spring-boot.version>
     </properties>
@@ -136,6 +137,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin.version}</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
