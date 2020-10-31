@@ -1,3 +1,3 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.is4j.insp4j.reactive.configuration.InspReactiveConfiguration
+cn.is4j.insp.reactive.configuration.InspReactiveConfiguration
