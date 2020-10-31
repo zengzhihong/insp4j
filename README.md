@@ -88,9 +88,9 @@ public class DeptController {
     }
     // 权限分组 业务系统/运营系统 可能用户账号体系不一样，权限体系也是分开设计的，就需要用到groupName来实现分组
     // 一个分组可以单独一套用户/权限
-    @Insp(value = "hasFuncData('dept:update',#id)", groupName = "system")
-    @GetMapping("/updateById")
-    public R<?> info(@RequestParam Long id) {
+    @Insp(value = "hasFuncData('dept:delete',#id)", groupName = "system")
+    @GetMapping("/deleteById")
+    public R<?> deleteById(@RequestParam Long id) {
         return ok();
     }
 
