@@ -36,12 +36,14 @@ public class DefaultMethodInspExpressionHandler extends AbstractInspExpressionHa
     }
 
     @Override
-    protected StandardEvaluationContext createEvaluationContextInternal(InspAuthentication authentication, MethodInvocation invocation) {
+    protected StandardEvaluationContext createEvaluationContextInternal(InspAuthentication authentication,
+                                                                        MethodInvocation invocation) {
         return new MethodInspEvaluationContext(invocation, getParameterNameDiscoverer());
     }
 
     @Override
-    protected InspExpressionOperations createInspExpressionRoot(InspAuthentication authentication, MethodInvocation invocation) {
+    protected InspExpressionOperations createInspExpressionRoot(InspAuthentication authentication,
+                                                                MethodInvocation invocation) {
         return new InspExpressionRoot(authentication);
     }
 

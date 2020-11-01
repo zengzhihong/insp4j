@@ -41,8 +41,8 @@ public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationSe
         List<String> funcAuthorities = RedisStore.get(inspGroupName, userId, 0);
         List<String> dataAuthorities = RedisStore.get(inspGroupName, userId, 1);
         return new InspAuthentication(userId + "", funcAuthorities, dataAuthorities);
-        //如果是超管可以这样new
-//        return InspAuthentication.createHighestAuth(userId + "");
+        // 如果是超管可以这样new
+        // return InspAuthentication.createHighestAuth(userId + "");
     }
 
 
@@ -64,11 +64,13 @@ public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationSe
                 return Arrays.asList("user:list", "user:save", "user:get", "shop:list", "enterprise:list");
             }
             if (funcOrData == 1) {
-                return new ArrayList<String>() {{
-                    for (int i = 0; i < 10; i++) {
-                        add(i + "");
+                return new ArrayList<String>() {
+                    {
+                        for (int i = 0; i < 10; i++) {
+                            add(i + "");
+                        }
                     }
-                }};
+                };
             }
             throw new IllegalArgumentException("error funcOrData");
         }

@@ -38,7 +38,8 @@ public class DefaultInspWebExceptionTranslator implements InspExceptionTranslato
     @SneakyThrows
     @Override
     public Object translate(InspException e) {
-        HttpServletResponse response = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+        HttpServletResponse response =
+                ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
         response.setCharacterEncoding(InspConst.UTF8);
         response.setContentType(InspConst.HTTP_CONTENT_TYPE_JSON);
         response.setStatus(e.getCode());

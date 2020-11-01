@@ -56,11 +56,13 @@ public abstract class AbstractInspExpressionHandler<T> implements InspExpression
     }
 
 
-    protected StandardEvaluationContext createEvaluationContextInternal(InspAuthentication authentication, T invocation) {
+    protected StandardEvaluationContext createEvaluationContextInternal(InspAuthentication authentication,
+                                                                        T invocation) {
         return new StandardEvaluationContext();
     }
 
-    protected abstract InspExpressionOperations createInspExpressionRoot(InspAuthentication authentication, T invocation);
+    protected abstract InspExpressionOperations createInspExpressionRoot(InspAuthentication authentication,
+                                                                         T invocation);
 
 
     @Override

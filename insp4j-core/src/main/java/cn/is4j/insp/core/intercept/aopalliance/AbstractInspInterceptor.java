@@ -17,8 +17,8 @@
 package cn.is4j.insp.core.intercept.aopalliance;
 
 import cn.is4j.insp.core.annotation.Insp;
-import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.context.InspContextHolder;
+import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.exception.InspException;
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.exception.ThrowableInsExceptionTranslator;
@@ -62,8 +62,10 @@ public abstract class AbstractInspInterceptor {
                 if (!StringUtils.hasText(metadataSource.getExpressionString())) {
                     continue;
                 }
-                EvaluationContext ctx = expressionHandler.createEvaluationContext(metadataSource.getAuthentication(), metadataSource.getInvocation());
-                final Boolean expressionValue = expressionHandler.getExpressionParser().parseExpression(metadataSource.getExpressionString()).getValue(ctx, Boolean.class);
+                EvaluationContext ctx = expressionHandler.createEvaluationContext(
+                        metadataSource.getAuthentication(), metadataSource.getInvocation());
+                final Boolean expressionValue = expressionHandler.getExpressionParser()
+                        .parseExpression(metadataSource.getExpressionString()).getValue(ctx, Boolean.class);
                 if (null == expressionValue || !expressionValue) {
                     throw new UnAuthenticationInspException("deny of access");
                 }
@@ -93,10 +95,12 @@ public abstract class AbstractInspInterceptor {
         Insp onMethod = AnnotationUtils.findAnnotation(invocation.getMethod(), Insp.class);
         List<MethodInspInterceptorMetadataSource> metadataSources = new ArrayList<>();
         if (onClass != null) {
-            metadataSources.add(new MethodInspInterceptorMetadataSource(invocation, loadAuthenticationCtx(onClass.groupName()), onClass.value()));
+            metadataSources.add(
+                    new MethodInspInterceptorMetadataSource(invocation, loadAuthenticationCtx(onClass.groupName()), onClass.value()));
         }
         if (onMethod != null) {
-            metadataSources.add(new MethodInspInterceptorMetadataSource(invocation, loadAuthenticationCtx(onMethod.groupName()), onMethod.value()));
+            metadataSources.add(
+                    new MethodInspInterceptorMetadataSource(invocation, loadAuthenticationCtx(onMethod.groupName()), onMethod.value()));
         }
         return metadataSources;
     }

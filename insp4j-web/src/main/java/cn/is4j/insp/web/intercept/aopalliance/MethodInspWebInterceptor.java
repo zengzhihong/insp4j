@@ -49,7 +49,8 @@ public class MethodInspWebInterceptor extends AbstractInspInterceptor implements
     @Override
     protected InspAuthentication loadAuthentication(String groupName) {
         return authenticationService.loadAuthentication(
-                ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest(), groupName);
+                ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+                        .getRequest(), groupName);
     }
 
 }

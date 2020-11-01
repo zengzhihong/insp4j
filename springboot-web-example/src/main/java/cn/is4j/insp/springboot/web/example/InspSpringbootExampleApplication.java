@@ -19,12 +19,12 @@ package cn.is4j.insp.springboot.web.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@EnableAspectJAutoProxy(proxyTargetClass=true)
+// @EnableAspectJAutoProxy(proxyTargetClass=true)
 @SpringBootApplication
 public class InspSpringbootExampleApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(InspSpringbootExampleApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(InspSpringbootExampleApplication.class, args);
+    }
 
 }

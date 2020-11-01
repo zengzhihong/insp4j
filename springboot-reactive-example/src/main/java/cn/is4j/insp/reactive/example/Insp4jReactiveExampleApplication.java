@@ -23,7 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Insp4jReactiveExampleApplication {
 
     public static void main(String[] args) {
-		SpringApplication.run(Insp4jReactiveExampleApplication.class, args);
+        SpringApplication.run(Insp4jReactiveExampleApplication.class, args);
     }
 
 }

@@ -50,13 +50,15 @@ public class InspReactiveConfiguration {
     @ConditionalOnMissingBean
     public MethodInspReactiveInterceptor methodInspInterceptor() {
         if (null == authenticationService) {
-            throw new InspException("required a bean of type '" + InspReactiveAuthenticationService.class.getName() + "' that could not be found");
+            throw new InspException(
+                    "required a bean of type '" + InspReactiveAuthenticationService.class.getName() + "' that could not be found");
         }
         return new MethodInspReactiveInterceptor(authenticationService);
     }
 
     @Bean
-    public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(MethodInspReactiveInterceptor methodInspWebInterceptor) {
+    public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(
+            MethodInspReactiveInterceptor methodInspWebInterceptor) {
         return new InspAnnotationBeanPostProcessor(methodInspWebInterceptor);
     }
 

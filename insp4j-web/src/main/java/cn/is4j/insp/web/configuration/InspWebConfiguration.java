@@ -44,13 +44,15 @@ public class InspWebConfiguration {
     @ConditionalOnMissingBean
     public MethodInspWebInterceptor methodInspInterceptor() {
         if (null == authenticationService) {
-            throw new InspException("required a bean of type '" + InspWebAuthenticationService.class.getName() + "' that could not be found");
+            throw new InspException(
+                    "required a bean of type '" + InspWebAuthenticationService.class.getName() + "' that could not be found");
         }
         return new MethodInspWebInterceptor(authenticationService);
     }
 
     @Bean
-    public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(MethodInspWebInterceptor methodInspWebInterceptor) {
+    public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(
+            MethodInspWebInterceptor methodInspWebInterceptor) {
         return new InspAnnotationBeanPostProcessor(methodInspWebInterceptor);
     }
 

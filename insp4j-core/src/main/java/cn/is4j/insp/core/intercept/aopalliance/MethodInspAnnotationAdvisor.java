@@ -51,11 +51,11 @@ public class MethodInspAnnotationAdvisor extends AbstractPointcutAdvisor {
 
     private Pointcut buildPointcut() {
         ComposablePointcut result;
-        //class annotation
+        // class annotation
         Pointcut cpc = new AnnotationMatchingPointcut(Insp.class, true);
-        //method annotation
+        // method annotation
         Pointcut mpc = AnnotationMatchingPointcut.forMethodAnnotation(Insp.class);
-        //composable class method
+        // composable class method
         result = new ComposablePointcut(cpc);
         return result.union(mpc);
     }
