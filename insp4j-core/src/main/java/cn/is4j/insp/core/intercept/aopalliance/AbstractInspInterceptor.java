@@ -18,8 +18,8 @@ package cn.is4j.insp.core.intercept.aopalliance;
 
 import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.core.context.InspContextHolder;
-import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.exception.InspException;
+import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.exception.ThrowableInsExceptionTranslator;
 import cn.is4j.insp.core.exception.UnAuthenticationInspException;
@@ -96,11 +96,13 @@ public abstract class AbstractInspInterceptor {
         List<MethodInspInterceptorMetadataSource> metadataSources = new ArrayList<>();
         if (onClass != null) {
             metadataSources.add(
-                    new MethodInspInterceptorMetadataSource(invocation, loadAuthenticationCtx(onClass.groupName()), onClass.value()));
+                    new MethodInspInterceptorMetadataSource(
+                            invocation, loadAuthenticationCtx(onClass.groupName()), onClass.value()));
         }
         if (onMethod != null) {
             metadataSources.add(
-                    new MethodInspInterceptorMetadataSource(invocation, loadAuthenticationCtx(onMethod.groupName()), onMethod.value()));
+                    new MethodInspInterceptorMetadataSource(
+                            invocation, loadAuthenticationCtx(onMethod.groupName()), onMethod.value()));
         }
         return metadataSources;
     }

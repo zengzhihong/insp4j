@@ -51,7 +51,9 @@ public class InspReactiveConfiguration {
     public MethodInspReactiveInterceptor methodInspInterceptor() {
         if (null == authenticationService) {
             throw new InspException(
-                    "required a bean of type '" + InspReactiveAuthenticationService.class.getName() + "' that could not be found");
+                    "required a bean of type '" +
+                            InspReactiveAuthenticationService.class.getName() +
+                            "' that could not be found");
         }
         return new MethodInspReactiveInterceptor(authenticationService);
     }

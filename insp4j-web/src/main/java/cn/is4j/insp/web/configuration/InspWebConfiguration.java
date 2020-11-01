@@ -45,7 +45,9 @@ public class InspWebConfiguration {
     public MethodInspWebInterceptor methodInspInterceptor() {
         if (null == authenticationService) {
             throw new InspException(
-                    "required a bean of type '" + InspWebAuthenticationService.class.getName() + "' that could not be found");
+                    "required a bean of type '" +
+                            InspWebAuthenticationService.class.getName() +
+                            "' that could not be found");
         }
         return new MethodInspWebInterceptor(authenticationService);
     }
