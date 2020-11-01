@@ -16,8 +16,8 @@
 
 package cn.is4j.insp.springboot.web.example.controller;
 
+import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.springboot.web.example.ExampleGroupConst;
-import cn.is4j.insp4j.core.annotation.Insp;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

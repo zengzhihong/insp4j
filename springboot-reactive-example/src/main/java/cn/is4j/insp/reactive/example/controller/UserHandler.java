@@ -16,7 +16,7 @@
 
 package cn.is4j.insp.reactive.example.controller;
 
-import cn.is4j.insp4j.core.annotation.Insp;
+import cn.is4j.insp.core.annotation.Insp;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;

@@ -16,8 +16,8 @@
 
 package cn.is4j.insp.springboot.web.example.controller;
 
-import cn.is4j.insp4j.core.annotation.Insp;
-import cn.is4j.insp4j.core.context.InspContextHolder;
+import cn.is4j.insp.core.annotation.Insp;
+import cn.is4j.insp.core.context.InspContextHolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;

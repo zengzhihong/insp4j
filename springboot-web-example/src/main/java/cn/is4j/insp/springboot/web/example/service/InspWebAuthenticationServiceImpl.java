@@ -16,8 +16,8 @@
 
 package cn.is4j.insp.springboot.web.example.service;
 
-import cn.is4j.insp4j.core.service.InspAuthentication;
-import cn.is4j.insp4j.web.service.InspWebAuthenticationService;
+import cn.is4j.insp.core.service.InspAuthentication;
+import cn.is4j.insp.web.service.InspWebAuthenticationService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

@@ -16,7 +16,7 @@
 
 package cn.is4j.insp.reactive.example.exception;
 
-import cn.is4j.insp4j.core.exception.InspException;
+import cn.is4j.insp.core.exception.InspException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;

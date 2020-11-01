@@ -16,8 +16,8 @@
 
 package cn.is4j.insp.reactive.example.service;
 
-import cn.is4j.insp4j.core.service.InspAuthentication;
-import cn.is4j.insp4j.reactive.service.InspReactiveAuthenticationService;
+import cn.is4j.insp.core.service.InspAuthentication;
+import cn.is4j.insp.reactive.service.InspReactiveAuthenticationService;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
