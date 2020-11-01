@@ -1,6 +1,10 @@
 
 # insp4j轻量级权限框架
 
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/maven-central/v/cn.is4j.insp/insp4j)](https://search.maven.org/search?q=insp)
+[![License](https://img.shields.io/github/stars/zengzhihong/insp4j?style=social)](https://github.com/zengzhihong/insp4j)
+
 ## 简介
 
 * insp4j为inspector的缩写，中文含义检查员。 
