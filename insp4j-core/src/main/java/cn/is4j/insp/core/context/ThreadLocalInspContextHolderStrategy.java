@@ -23,20 +23,20 @@ import org.springframework.util.Assert;
  */
 public class ThreadLocalInspContextHolderStrategy implements InspContextHolderStrategy {
 
-    private static final ThreadLocal<InspContext> contextHolder = new ThreadLocal<>();
+    private static final ThreadLocal<InspContext> CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
 
     @Override
     public void clearContext() {
-        contextHolder.remove();
+        CONTEXT_HOLDER.remove();
     }
 
     @Override
     public InspContext getContext() {
-        InspContext ctx = contextHolder.get();
+        InspContext ctx = CONTEXT_HOLDER.get();
         if (ctx == null) {
             ctx = createEmptyContext();
-            contextHolder.set(ctx);
+            CONTEXT_HOLDER.set(ctx);
         }
         return ctx;
     }
@@ -44,7 +44,7 @@ public class ThreadLocalInspContextHolderStrategy implements InspContextHolderSt
     @Override
     public void setContext(InspContext context) {
         Assert.notNull(context, "Only non-null InspContext instances are permitted");
-        contextHolder.set(context);
+        CONTEXT_HOLDER.set(context);
     }
 
     @Override
