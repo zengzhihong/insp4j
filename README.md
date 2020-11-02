@@ -2,8 +2,9 @@
 # insp4j轻量级权限框架
 
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![License](https://img.shields.io/maven-central/v/cn.is4j.insp/insp4j)](https://search.maven.org/search?q=insp)
-[![License](https://img.shields.io/github/stars/zengzhihong/insp4j?style=social)](https://github.com/zengzhihong/insp4j)
+[![Maven](https://img.shields.io/maven-central/v/cn.is4j.insp/insp4j)](https://search.maven.org/search?q=insp)
+[![Github](https://img.shields.io/github/stars/zengzhihong/insp4j?style=social)](https://github.com/zengzhihong/insp4j)
+[![Gitee](https://gitee.com/zengzhihong/insp4j/badge/star.svg?theme=dark)](https://gitee.com/zengzhihong/insp4j)
 
 ## 简介
 
@@ -129,8 +130,8 @@ public class DeptController {
 ## ps
 
 这种基于AOP对注解上的权限标识做拦截是很简单的，相信大家都会，目前提供的功能比较简单，不喜勿喷<br>
-当下主要是解决我们项目里各种系统权限控制不统一，每个子系统不同小组在开发，各自做各自的，增加一个子系统就要做一套权限，没有统一模式。
-代码比较简单，注释用的散装英文，主要是为了练习英文，不是装13哦，太散装了也装不起来。
+当下主要是解决我们项目里各种系统权限控制不统一，每个子系统不同小组在开发，各自做各自的，增加一个子系统就要做一套权限，没有统一模式。<br>
+**QQ群：336752559**
 
 ## 开源协议
  
