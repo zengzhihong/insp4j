@@ -21,19 +21,19 @@ package cn.is4j.insp.core.constants;
  */
 public class InspConst {
 
-	/**
-	 * UTF-8编码格式
-	 */
-	public static final String UTF8 = "UTF-8";
+    /**
+     * UTF-8编码格式
+     */
+    public static final String UTF8 = "UTF-8";
 
-	/**
-	 * http json utf8 content type
-	 */
-	public static final String HTTP_CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
+    /**
+     * http json utf8 content type
+     */
+    public static final String HTTP_CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
 
-	/**
-	 * default group name
-	 */
-	public static final String DEFAULT_GROUP_NAME = "default";
+    /**
+     * default group name
+     */
+    public static final String DEFAULT_GROUP_NAME = "default";
 
 }

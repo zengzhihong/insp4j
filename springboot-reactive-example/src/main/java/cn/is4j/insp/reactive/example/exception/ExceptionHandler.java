@@ -20,9 +20,6 @@ import cn.is4j.insp.core.exception.InspException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
-import reactor.core.publisher.Mono;
-import reactor.netty.ByteBufMono;
-
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -31,29 +28,31 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+import reactor.netty.ByteBufMono;
 
 @Component
 @Order(-2)
 public class ExceptionHandler implements ErrorWebExceptionHandler {
 
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-	@SneakyThrows
-	@Override
-	public Mono<Void> handle(ServerWebExchange serverWebExchange, Throwable throwable) {
+    @SneakyThrows
+    @Override
+    public Mono<Void> handle(ServerWebExchange serverWebExchange, Throwable throwable) {
 
-		int code = 500;
-		if (throwable instanceof InspException) {
-			code = ((InspException) throwable).getCode();
-		}
-		ServerHttpResponse response = serverWebExchange.getResponse();
-		response.setStatusCode(HttpStatus.valueOf(code));
-		final ObjectNode objectNode = OBJECT_MAPPER.createObjectNode();
-		objectNode.put("code", code);
-		objectNode.put("message", throwable.getMessage());
-		DataBuffer buff = response.bufferFactory().allocateBuffer()
-				.write(OBJECT_MAPPER.writeValueAsBytes(objectNode));
-		response.getHeaders().setContentType(MediaType.APPLICATION_STREAM_JSON);
-		return response.writeAndFlushWith(Mono.just(ByteBufMono.just(buff)));
-	}
+        int code = 500;
+        if (throwable instanceof InspException) {
+            code = ((InspException) throwable).getCode();
+        }
+        ServerHttpResponse response = serverWebExchange.getResponse();
+        response.setStatusCode(HttpStatus.valueOf(code));
+        final ObjectNode objectNode = OBJECT_MAPPER.createObjectNode();
+        objectNode.put("code", code);
+        objectNode.put("message", throwable.getMessage());
+        DataBuffer buff = response.bufferFactory().allocateBuffer()
+                .write(OBJECT_MAPPER.writeValueAsBytes(objectNode));
+        response.getHeaders().setContentType(MediaType.APPLICATION_STREAM_JSON);
+        return response.writeAndFlushWith(Mono.just(ByteBufMono.just(buff)));
+    }
 }

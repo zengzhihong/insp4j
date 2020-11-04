@@ -21,5 +21,5 @@ package cn.is4j.insp.core.exception;
  */
 public interface InspExceptionTranslator {
 
-	Object translate(InspException e);
+    Object translate(InspException e);
 }

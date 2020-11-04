@@ -16,55 +16,55 @@
 
 package cn.is4j.insp.core.expression;
 
-import java.util.Arrays;
-import java.util.List;
-
 import cn.is4j.insp.core.service.InspAuthentication;
 import lombok.Setter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author zengzhihong
  */
 public class InspExpressionRoot implements InspExpressionOperations {
 
-	@Setter
-	private InspAuthentication authentication;
+    @Setter
+    private InspAuthentication authentication;
 
-	@Override
-	public boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities) {
-		return hasFunc(funcAuthorities) && hasData(dataAuthorities);
-	}
+    @Override
+    public boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities) {
+        return hasFunc(funcAuthorities) && hasData(dataAuthorities);
+    }
 
-	@Override
-	public boolean hasFunc(String[] funcAuthorities) {
-		return matches(true, authentication.getFuncAuthorities(), funcAuthorities);
-	}
+    @Override
+    public boolean hasFunc(String[] funcAuthorities) {
+        return matches(true, authentication.getFuncAuthorities(), funcAuthorities);
+    }
 
-	@Override
-	public boolean hasAnyFunc(String[] funcAuthorities) {
-		return matches(false, authentication.getFuncAuthorities(), funcAuthorities);
-	}
+    @Override
+    public boolean hasAnyFunc(String[] funcAuthorities) {
+        return matches(false, authentication.getFuncAuthorities(), funcAuthorities);
+    }
 
-	@Override
-	public boolean hasData(String[] dataAuthorities) {
-		return matches(true, authentication.getDataAuthorities(), dataAuthorities);
-	}
+    @Override
+    public boolean hasData(String[] dataAuthorities) {
+        return matches(true, authentication.getDataAuthorities(), dataAuthorities);
+    }
 
-	@Override
-	public boolean hasAnyData(String[] dataAuthorities) {
-		return matches(false, authentication.getDataAuthorities(), dataAuthorities);
-	}
+    @Override
+    public boolean hasAnyData(String[] dataAuthorities) {
+        return matches(false, authentication.getDataAuthorities(), dataAuthorities);
+    }
 
-	private boolean matches(boolean allMatches, List<String> authenticationAuthorities,
-			String... inspAuthorities) {
-		if (authentication.isHighestAuth()) {
-			return true;
-		}
-		return allMatches
-				? Arrays.stream(inspAuthorities)
-						.allMatch(authenticationAuthorities::contains)
-				: Arrays.stream(inspAuthorities)
-						.anyMatch(authenticationAuthorities::contains);
-	}
+    private boolean matches(boolean allMatches, List<String> authenticationAuthorities,
+                            String... inspAuthorities) {
+        if (authentication.isHighestAuth()) {
+            return true;
+        }
+        return allMatches
+                ? Arrays.stream(inspAuthorities)
+                .allMatch(authenticationAuthorities::contains)
+                : Arrays.stream(inspAuthorities)
+                .anyMatch(authenticationAuthorities::contains);
+    }
 
 }

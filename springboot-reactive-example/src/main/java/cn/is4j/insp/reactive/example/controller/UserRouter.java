@@ -30,11 +30,11 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Component
 public class UserRouter {
 
-	@Bean
-	public RouterFunction<ServerResponse> routeCity(UserHandler userHandler) {
-		return RouterFunctions.route(
-				RequestPredicates.GET("/hello")
-						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
-				userHandler::helloUser);
-	}
+    @Bean
+    public RouterFunction<ServerResponse> routeCity(UserHandler userHandler) {
+        return RouterFunctions.route(
+                RequestPredicates.GET("/hello")
+                        .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
+                userHandler::helloUser);
+    }
 }

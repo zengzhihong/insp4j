@@ -23,18 +23,18 @@ import lombok.Getter;
  */
 public class InspException extends RuntimeException {
 
-	@Getter
-	private int code = 500;
+    @Getter
+    private int code = 500;
 
-	public InspException() {
-	}
+    public InspException() {
+    }
 
-	public InspException(int code, String message) {
-		super(message);
-		this.code = code;
-	}
+    public InspException(int code, String message) {
+        super(message);
+        this.code = code;
+    }
 
-	public InspException(String message) {
-		super(message);
-	}
+    public InspException(String message) {
+        super(message);
+    }
 }

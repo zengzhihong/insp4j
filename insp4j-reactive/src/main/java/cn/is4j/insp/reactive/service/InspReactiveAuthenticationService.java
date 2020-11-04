@@ -18,16 +18,15 @@ package cn.is4j.insp.reactive.service;
 
 import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.service.InspAuthentication;
-import reactor.core.publisher.Mono;
-
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import reactor.core.publisher.Mono;
 
 /**
  * @author zengzhihong
  */
 public interface InspReactiveAuthenticationService {
 
-	InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request,
-			InspMetadataSource metadataSource);
+    InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request,
+                                          InspMetadataSource metadataSource);
 
 }

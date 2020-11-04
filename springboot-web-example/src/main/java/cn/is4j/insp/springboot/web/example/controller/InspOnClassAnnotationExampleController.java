@@ -20,7 +20,6 @@ import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.core.context.InspContextHolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,20 +34,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/class")
 public class InspOnClassAnnotationExampleController {
 
-	@SneakyThrows
-	@Insp(value = "hasFunc('shop:list')", groupName = "a")
-	@GetMapping("/1")
-	public String class1() {
-		return new ObjectMapper().writeValueAsString(
-				InspContextHolder.getContext().getAuthentication("a"));
-	}
+    @SneakyThrows
+    @Insp(value = "hasFunc('shop:list')", groupName = "a")
+    @GetMapping("/1")
+    public String class1() {
+        return new ObjectMapper().writeValueAsString(
+                InspContextHolder.getContext().getAuthentication("a"));
+    }
 
-	@SneakyThrows
-	@Insp(value = "hasFunc('user:save1')", groupName = "b")
-	@GetMapping("/2")
-	public String class2() {
-		return new ObjectMapper().writeValueAsString(
-				InspContextHolder.getContext().getAuthentication("b"));
-	}
+    @SneakyThrows
+    @Insp(value = "hasFunc('user:save1')", groupName = "b")
+    @GetMapping("/2")
+    public String class2() {
+        return new ObjectMapper().writeValueAsString(
+                InspContextHolder.getContext().getAuthentication("b"));
+    }
 
 }

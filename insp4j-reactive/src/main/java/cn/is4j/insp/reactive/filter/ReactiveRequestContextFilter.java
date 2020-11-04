@@ -17,17 +17,16 @@
 package cn.is4j.insp.reactive.filter;
 
 import cn.is4j.insp.reactive.ReactiveRequestContextHolder;
-import reactor.core.publisher.Mono;
-
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
 public class ReactiveRequestContextFilter implements WebFilter {
 
-	@Override
-	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-		return chain.filter(exchange).subscriberContext(ctx -> ctx
-				.put(ReactiveRequestContextHolder.REQUEST_KEY, exchange.getRequest()));
-	}
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        return chain.filter(exchange).subscriberContext(ctx -> ctx
+                .put(ReactiveRequestContextHolder.REQUEST_KEY, exchange.getRequest()));
+    }
 }

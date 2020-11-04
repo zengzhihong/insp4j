@@ -21,10 +21,10 @@ package cn.is4j.insp.core.exception;
  */
 public class UnAuthenticationInspException extends InspException {
 
-	public UnAuthenticationInspException() {
-	}
+    public UnAuthenticationInspException() {
+    }
 
-	public UnAuthenticationInspException(String message) {
-		super(403, message);
-	}
+    public UnAuthenticationInspException(String message) {
+        super(403, message);
+    }
 }

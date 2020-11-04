@@ -16,29 +16,29 @@
 
 package cn.is4j.insp.core.context;
 
+import cn.is4j.insp.core.service.InspAuthentication;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import cn.is4j.insp.core.service.InspAuthentication;
 
 /**
  * @author zengzhihong
  */
 public class InspContextImpl implements InspContext {
 
-	private final Map<String, InspAuthentication> authenticationMap;
+    private final Map<String, InspAuthentication> authenticationMap;
 
-	public InspContextImpl() {
-		authenticationMap = new HashMap<>(2);
-	}
+    public InspContextImpl() {
+        authenticationMap = new HashMap<>(2);
+    }
 
-	@Override
-	public InspAuthentication getAuthentication(String groupName) {
-		return authenticationMap.get(groupName);
-	}
+    @Override
+    public InspAuthentication getAuthentication(String groupName) {
+        return authenticationMap.get(groupName);
+    }
 
-	@Override
-	public void setAuthentication(String groupName, InspAuthentication authentication) {
-		authenticationMap.put(groupName, authentication);
-	}
+    @Override
+    public void setAuthentication(String groupName, InspAuthentication authentication) {
+        authenticationMap.put(groupName, authentication);
+    }
 }

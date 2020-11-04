@@ -50,101 +50,99 @@ import java.util.List;
  * @author zengzhihong
  */
 public abstract class AbstractInspInterceptor
-		implements InspInterceptor, ApplicationContextAware {
+        implements InspInterceptor, ApplicationContextAware {
 
-	private final InspExceptionTranslator exceptionTranslator;
-	@Setter
-	private InspExpressionHandler expressionHandler = new DefaultMethodInspExpressionHandler();
-	private BeanResolver br;
+    private final InspExceptionTranslator exceptionTranslator;
+    @Setter
+    private InspExpressionHandler expressionHandler = new DefaultMethodInspExpressionHandler();
+    private BeanResolver br;
 
-	public AbstractInspInterceptor() {
-		this.exceptionTranslator = new ThrowableInsExceptionTranslator();
-	}
+    public AbstractInspInterceptor() {
+        this.exceptionTranslator = new ThrowableInsExceptionTranslator();
+    }
 
-	public AbstractInspInterceptor(InspExceptionTranslator exceptionTranslator) {
-		this.exceptionTranslator = exceptionTranslator;
-	}
+    public AbstractInspInterceptor(InspExceptionTranslator exceptionTranslator) {
+        this.exceptionTranslator = exceptionTranslator;
+    }
 
-	protected Object proceed(MethodInvocation invocation) throws Throwable {
-		try {
-			List<InspMetadataSource> metadataSources = obtainMetadataSource(invocation);
-			for (InspMetadataSource metadataSource : metadataSources) {
-				if (!StringUtils.hasText(metadataSource.getExpressionString())) {
-					continue;
-				}
-				MethodInspEvaluationContext ctx = (MethodInspEvaluationContext) expressionHandler
-						.createEvaluationContext(invocation);
-				final InspExpressionOperations expressionOperations = (InspExpressionOperations) Proxy
-						.newProxyInstance(InspExpressionRoot.class.getClassLoader(),
-								InspExpressionRoot.class.getInterfaces(),
-								new InspExpressionInvocationHandler(
-										new InspExpressionRoot(), this, metadataSource));
-				ctx.setRootObject(expressionOperations);
-				ctx.setBeanResolver(br);
-				// do invoke
-				final Boolean expressionValue = expressionHandler.getExpressionParser()
-						.parseExpression(metadataSource.getExpressionString())
-						.getValue(ctx, Boolean.class);
-				if (null == expressionValue || !expressionValue) {
-					throw new UnAuthenticationInspException("deny of access");
-				}
-			}
-		}
-		catch (Exception e) {
-			// exceptionTranslator may be trigger another exception
-			// so clearContext before exceptionTranslator
-			InspContextHolder.clearContext();
-			if (e instanceof InspException) {
-				exceptionTranslator.translate((InspException) e);
-				return null;
-			}
-			throw e;
-		}
-		final Object result;
-		try {
-			result = invocation.proceed();
-		}
-		finally {
-			InspContextHolder.clearContext();
-		}
-		return result;
-	}
+    protected Object proceed(MethodInvocation invocation) throws Throwable {
+        try {
+            List<InspMetadataSource> metadataSources = obtainMetadataSource(invocation);
+            for (InspMetadataSource metadataSource : metadataSources) {
+                if (!StringUtils.hasText(metadataSource.getExpressionString())) {
+                    continue;
+                }
+                MethodInspEvaluationContext ctx = (MethodInspEvaluationContext) expressionHandler
+                        .createEvaluationContext(invocation);
+                final InspExpressionOperations expressionOperations = (InspExpressionOperations) Proxy
+                        .newProxyInstance(InspExpressionRoot.class.getClassLoader(),
+                                InspExpressionRoot.class.getInterfaces(),
+                                new InspExpressionInvocationHandler(
+                                        new InspExpressionRoot(), this, metadataSource));
+                ctx.setRootObject(expressionOperations);
+                ctx.setBeanResolver(br);
+                // do invoke
+                final Boolean expressionValue = expressionHandler.getExpressionParser()
+                        .parseExpression(metadataSource.getExpressionString())
+                        .getValue(ctx, Boolean.class);
+                if (null == expressionValue || !expressionValue) {
+                    throw new UnAuthenticationInspException("deny of access");
+                }
+            }
+        } catch (Exception e) {
+            // exceptionTranslator may be trigger another exception
+            // so clearContext before exceptionTranslator
+            InspContextHolder.clearContext();
+            if (e instanceof InspException) {
+                exceptionTranslator.translate((InspException) e);
+                return null;
+            }
+            throw e;
+        }
+        final Object result;
+        try {
+            result = invocation.proceed();
+        } finally {
+            InspContextHolder.clearContext();
+        }
+        return result;
+    }
 
-	protected List<InspMetadataSource> obtainMetadataSource(MethodInvocation invocation) {
-		Insp onClass = AnnotationUtils
-				.findAnnotation(invocation.getMethod().getDeclaringClass(), Insp.class);
-		Insp onMethod = AnnotationUtils.findAnnotation(invocation.getMethod(),
-				Insp.class);
-		List<InspMetadataSource> metadataSources = new ArrayList<>();
-		if (onClass != null) {
-			metadataSources
-					.add(new InspMetadataSource(onClass.groupName(), onClass.value()));
-		}
-		if (onMethod != null) {
-			metadataSources
-					.add(new InspMetadataSource(onMethod.groupName(), onMethod.value()));
-		}
-		return metadataSources;
-	}
+    protected List<InspMetadataSource> obtainMetadataSource(MethodInvocation invocation) {
+        Insp onClass = AnnotationUtils
+                .findAnnotation(invocation.getMethod().getDeclaringClass(), Insp.class);
+        Insp onMethod = AnnotationUtils.findAnnotation(invocation.getMethod(),
+                Insp.class);
+        List<InspMetadataSource> metadataSources = new ArrayList<>();
+        if (onClass != null) {
+            metadataSources
+                    .add(new InspMetadataSource(onClass.groupName(), onClass.value()));
+        }
+        if (onMethod != null) {
+            metadataSources
+                    .add(new InspMetadataSource(onMethod.groupName(), onMethod.value()));
+        }
+        return metadataSources;
+    }
 
-	@Override
-	public InspAuthentication onAuthentication(InspMetadataSource metadataSource) {
-		InspAuthentication authentication = InspContextHolder.getContext()
-				.getAuthentication(metadataSource.getGroupName());
-		if (null == authentication) {
-			authentication = loadAuthentication(metadataSource);
-			InspContextHolder.getContext()
-					.setAuthentication(metadataSource.getGroupName(), authentication);
-		}
-		return authentication;
-	}
+    @Override
+    public InspAuthentication onAuthentication(InspMetadataSource metadataSource) {
+        InspAuthentication authentication = InspContextHolder.getContext()
+                .getAuthentication(metadataSource.getGroupName());
+        if (null == authentication) {
+            authentication = loadAuthentication(metadataSource);
+            InspContextHolder.getContext()
+                    .setAuthentication(metadataSource.getGroupName(), authentication);
+        }
+        return authentication;
+    }
 
-	protected abstract InspAuthentication loadAuthentication(
-			InspMetadataSource metadataSource);
+    protected abstract InspAuthentication loadAuthentication(
+            InspMetadataSource metadataSource);
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
-		this.br = new BeanFactoryResolver(applicationContext);
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext)
+            throws BeansException {
+        this.br = new BeanFactoryResolver(applicationContext);
+    }
 }

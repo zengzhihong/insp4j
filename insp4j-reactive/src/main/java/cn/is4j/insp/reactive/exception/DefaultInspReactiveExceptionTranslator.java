@@ -25,10 +25,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class DefaultInspReactiveExceptionTranslator implements InspExceptionTranslator {
 
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-	@Override
-	public Object translate(InspException e) {
-		throw e;
-	}
+    @Override
+    public Object translate(InspException e) {
+        throw e;
+    }
 }

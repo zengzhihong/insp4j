@@ -16,12 +16,12 @@
 
 package cn.is4j.insp.core.service;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author zengzhihong
@@ -30,31 +30,31 @@ import lombok.Setter;
 @Setter
 public class InspAuthentication implements Serializable {
 
-	private String id;
+    private String id;
 
-	private List<String> funcAuthorities;
+    private List<String> funcAuthorities;
 
-	private List<String> dataAuthorities;
+    private List<String> dataAuthorities;
 
-	private boolean highestAuth = false;
+    private boolean highestAuth = false;
 
-	public InspAuthentication(String id, List<String> funcAuthorities,
-			List<String> dataAuthorities) {
-		if (null == funcAuthorities || null == dataAuthorities) {
-			throw new IllegalArgumentException(
-					"funcAuthorities and dataAuthorities cannot be null");
-		}
-		this.id = id;
-		this.funcAuthorities = funcAuthorities;
-		this.dataAuthorities = dataAuthorities;
-	}
+    public InspAuthentication(String id, List<String> funcAuthorities,
+                              List<String> dataAuthorities) {
+        if (null == funcAuthorities || null == dataAuthorities) {
+            throw new IllegalArgumentException(
+                    "funcAuthorities and dataAuthorities cannot be null");
+        }
+        this.id = id;
+        this.funcAuthorities = funcAuthorities;
+        this.dataAuthorities = dataAuthorities;
+    }
 
-	public static InspAuthentication createHighestAuth(String id) {
-		final List<String> emptyList = Collections.emptyList();
-		final InspAuthentication authentication = new InspAuthentication(id, emptyList,
-				emptyList);
-		authentication.setHighestAuth(true);
-		return authentication;
-	}
+    public static InspAuthentication createHighestAuth(String id) {
+        final List<String> emptyList = Collections.emptyList();
+        final InspAuthentication authentication = new InspAuthentication(id, emptyList,
+                emptyList);
+        authentication.setHighestAuth(true);
+        return authentication;
+    }
 
 }

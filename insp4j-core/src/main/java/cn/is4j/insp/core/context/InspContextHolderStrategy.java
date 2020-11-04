@@ -21,11 +21,11 @@ package cn.is4j.insp.core.context;
  */
 public interface InspContextHolderStrategy {
 
-	void clearContext();
+    void clearContext();
 
-	InspContext getContext();
+    InspContext getContext();
 
-	void setContext(InspContext context);
+    void setContext(InspContext context);
 
-	InspContext createEmptyContext();
+    InspContext createEmptyContext();
 }

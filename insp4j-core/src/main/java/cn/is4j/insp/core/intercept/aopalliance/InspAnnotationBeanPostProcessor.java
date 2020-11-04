@@ -17,7 +17,6 @@
 package cn.is4j.insp.core.intercept.aopalliance;
 
 import org.aopalliance.intercept.MethodInterceptor;
-
 import org.springframework.aop.framework.AbstractAdvisingBeanPostProcessor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -27,17 +26,17 @@ import org.springframework.beans.factory.BeanFactoryAware;
  * @author zengzhihong
  */
 public class InspAnnotationBeanPostProcessor extends AbstractAdvisingBeanPostProcessor
-		implements BeanFactoryAware {
+        implements BeanFactoryAware {
 
-	private final MethodInterceptor interceptor;
+    private final MethodInterceptor interceptor;
 
-	public InspAnnotationBeanPostProcessor(MethodInterceptor interceptor) {
-		this.interceptor = interceptor;
-	}
+    public InspAnnotationBeanPostProcessor(MethodInterceptor interceptor) {
+        this.interceptor = interceptor;
+    }
 
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		setBeforeExistingAdvisors(true);
-		this.advisor = new MethodInspAnnotationAdvisor(this.interceptor);
-	}
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        setBeforeExistingAdvisors(true);
+        this.advisor = new MethodInspAnnotationAdvisor(this.interceptor);
+    }
 }

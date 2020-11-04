@@ -16,6 +16,8 @@
 
 package cn.is4j.insp.core.annotation;
 
+import cn.is4j.insp.core.expression.InspExpressionOperations;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -23,29 +25,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.is4j.insp.core.expression.InspExpressionOperations;
-
 /**
  * @author zengzhihong
  */
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 public @interface Insp {
 
-	/**
-	 * {@link InspExpressionOperations}
-	 *
-	 * @return Spring-EL
-	 */
-	String value();
+    /**
+     * {@link InspExpressionOperations}
+     *
+     * @return Spring-EL
+     */
+    String value();
 
-	/**
-	 * isolation authority
-	 *
-	 * @return default
-	 */
-	String groupName() default "default";
+    /**
+     * isolation authority
+     *
+     * @return default
+     */
+    String groupName() default "default";
 
 }
