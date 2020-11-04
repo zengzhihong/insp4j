@@ -19,6 +19,7 @@ package cn.is4j.insp.core.intercept.aopalliance;
 import cn.is4j.insp.core.annotation.Insp;
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
+
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.support.AbstractPointcutAdvisor;
 import org.springframework.aop.support.ComposablePointcut;
@@ -29,35 +30,35 @@ import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
  */
 public class MethodInspAnnotationAdvisor extends AbstractPointcutAdvisor {
 
-    private final MethodInterceptor interceptor;
-    private final Pointcut pointcut;
+	private final MethodInterceptor interceptor;
+	private final Pointcut pointcut;
 
-    public MethodInspAnnotationAdvisor(MethodInterceptor interceptor) {
-        if (null == interceptor) {
-            throw new IllegalArgumentException("The advice cannot be null");
-        }
-        this.interceptor = interceptor;
-        this.pointcut = buildPointcut();
-    }
+	public MethodInspAnnotationAdvisor(MethodInterceptor interceptor) {
+		if (null == interceptor) {
+			throw new IllegalArgumentException("The advice cannot be null");
+		}
+		this.interceptor = interceptor;
+		this.pointcut = buildPointcut();
+	}
 
-    @Override
-    public Pointcut getPointcut() {
-        return pointcut;
-    }
+	@Override
+	public Pointcut getPointcut() {
+		return pointcut;
+	}
 
-    @Override
-    public Advice getAdvice() {
-        return interceptor;
-    }
+	@Override
+	public Advice getAdvice() {
+		return interceptor;
+	}
 
-    private Pointcut buildPointcut() {
-        ComposablePointcut result;
-        // class annotation
-        Pointcut cpc = new AnnotationMatchingPointcut(Insp.class, true);
-        // method annotation
-        Pointcut mpc = AnnotationMatchingPointcut.forMethodAnnotation(Insp.class);
-        // composable class method
-        result = new ComposablePointcut(cpc);
-        return result.union(mpc);
-    }
+	private Pointcut buildPointcut() {
+		ComposablePointcut result;
+		// class annotation
+		Pointcut cpc = new AnnotationMatchingPointcut(Insp.class, true);
+		// method annotation
+		Pointcut mpc = AnnotationMatchingPointcut.forMethodAnnotation(Insp.class);
+		// composable class method
+		result = new ComposablePointcut(cpc);
+		return result.union(mpc);
+	}
 }

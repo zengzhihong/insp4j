@@ -8,5 +8,5 @@ import cn.is4j.insp.core.service.InspAuthentication;
  */
 public interface InspInterceptor {
 
-    InspAuthentication onAuthentication(InspMetadataSource metadataSource);
+	InspAuthentication onAuthentication(InspMetadataSource metadataSource);
 }

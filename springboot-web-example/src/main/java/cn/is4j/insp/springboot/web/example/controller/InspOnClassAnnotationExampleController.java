@@ -20,13 +20,13 @@ import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.core.context.InspContextHolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 注解在类上定义 会类下面的所有方法都会进行权限校验
- * 注解在类上有定义 方法上也有定义 则是 且的关系  先校验类上的权限 再校验方法上的权限
+ * 注解在类上定义 会类下面的所有方法都会进行权限校验 注解在类上有定义 方法上也有定义 则是 且的关系 先校验类上的权限 再校验方法上的权限
  *
  * @author zengzhihong
  */
@@ -35,20 +35,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/class")
 public class InspOnClassAnnotationExampleController {
 
-    @SneakyThrows
-    @Insp(value = "hasFunc('shop:list')", groupName = "a")
-    @GetMapping("/1")
-    public String class1() {
-        return new ObjectMapper().writeValueAsString(InspContextHolder.getContext().getAuthentication("a"));
-    }
+	@SneakyThrows
+	@Insp(value = "hasFunc('shop:list')", groupName = "a")
+	@GetMapping("/1")
+	public String class1() {
+		return new ObjectMapper().writeValueAsString(
+				InspContextHolder.getContext().getAuthentication("a"));
+	}
 
-
-    @SneakyThrows
-    @Insp(value = "hasFunc('user:save1')", groupName = "b")
-    @GetMapping("/2")
-    public String class2() {
-        return new ObjectMapper().writeValueAsString(InspContextHolder.getContext().getAuthentication("b"));
-    }
-
+	@SneakyThrows
+	@Insp(value = "hasFunc('user:save1')", groupName = "b")
+	@GetMapping("/2")
+	public String class2() {
+		return new ObjectMapper().writeValueAsString(
+				InspContextHolder.getContext().getAuthentication("b"));
+	}
 
 }

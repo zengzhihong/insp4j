@@ -21,34 +21,34 @@ package cn.is4j.insp.core.context;
  */
 public class ThreadLocalInspContextHolderStrategy implements InspContextHolderStrategy {
 
-    private static final ThreadLocal<InspContext> CONTEXT_HOLDER = new InheritableThreadLocal<>();
+	private static final ThreadLocal<InspContext> CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
+	@Override
+	public void clearContext() {
+		CONTEXT_HOLDER.remove();
+	}
 
-    @Override
-    public void clearContext() {
-        CONTEXT_HOLDER.remove();
-    }
+	@Override
+	public InspContext getContext() {
+		InspContext ctx = CONTEXT_HOLDER.get();
+		if (ctx == null) {
+			ctx = createEmptyContext();
+			CONTEXT_HOLDER.set(ctx);
+		}
+		return ctx;
+	}
 
-    @Override
-    public InspContext getContext() {
-        InspContext ctx = CONTEXT_HOLDER.get();
-        if (ctx == null) {
-            ctx = createEmptyContext();
-            CONTEXT_HOLDER.set(ctx);
-        }
-        return ctx;
-    }
+	@Override
+	public void setContext(InspContext context) {
+		if (null == context) {
+			throw new IllegalArgumentException(
+					"Only non-null InspContext instances are permitted");
+		}
+		CONTEXT_HOLDER.set(context);
+	}
 
-    @Override
-    public void setContext(InspContext context) {
-        if (null == context) {
-            throw new IllegalArgumentException("Only non-null InspContext instances are permitted");
-        }
-        CONTEXT_HOLDER.set(context);
-    }
-
-    @Override
-    public InspContext createEmptyContext() {
-        return new InspContextImpl();
-    }
+	@Override
+	public InspContext createEmptyContext() {
+		return new InspContextImpl();
+	}
 }

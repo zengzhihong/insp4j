@@ -16,27 +16,28 @@
 
 package cn.is4j.insp.core.expression.method;
 
+import java.lang.reflect.Method;
+
 import org.aopalliance.intercept.MethodInvocation;
+
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.ParameterNameDiscoverer;
-
-import java.lang.reflect.Method;
 
 /**
  * @author zengzhihong
  */
 public class MethodInspEvaluationContext extends MethodBasedEvaluationContext {
 
+	public MethodInspEvaluationContext(MethodInvocation invocation,
+			ParameterNameDiscoverer parameterNameDiscoverer) {
+		super(invocation.getThis(), getSpecificMethod(invocation),
+				invocation.getArguments(), parameterNameDiscoverer);
+	}
 
-    public MethodInspEvaluationContext(MethodInvocation invocation,
-                                       ParameterNameDiscoverer parameterNameDiscoverer) {
-        super(invocation.getThis(), getSpecificMethod(invocation), invocation.getArguments(), parameterNameDiscoverer);
-    }
-
-
-    private static Method getSpecificMethod(MethodInvocation mi) {
-        return AopUtils.getMostSpecificMethod(mi.getMethod(), AopProxyUtils.ultimateTargetClass(mi.getThis()));
-    }
+	private static Method getSpecificMethod(MethodInvocation mi) {
+		return AopUtils.getMostSpecificMethod(mi.getMethod(),
+				AopProxyUtils.ultimateTargetClass(mi.getThis()));
+	}
 }

@@ -21,6 +21,6 @@ package cn.is4j.insp.springboot.web.example;
  */
 public class ExampleGroupConst {
 
-    public static final String GROUP_SHOP = "shop";
-    public static final String GROUP_ENTERPRISE = "enterprise";
+	public static final String GROUP_SHOP = "shop";
+	public static final String GROUP_ENTERPRISE = "enterprise";
 }

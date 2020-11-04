@@ -23,46 +23,46 @@ import cn.is4j.insp.core.service.InspAuthentication;
  */
 public interface InspExpressionOperations {
 
-    void setAuthentication(InspAuthentication authentication);
+	void setAuthentication(InspAuthentication authentication);
 
-    /**
-     * single function、data authority composable
-     *
-     * @param funcAuthorities
-     * @param dataAuthorities
-     * @return
-     */
-    boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities);
+	/**
+	 * single function、data authority composable
+	 *
+	 * @param funcAuthorities
+	 * @param dataAuthorities
+	 * @return
+	 */
+	boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities);
 
-    /**
-     * multiple function authorities
-     *
-     * @param funcAuthorities
-     * @return
-     */
-    boolean hasFunc(String[] funcAuthorities);
+	/**
+	 * multiple function authorities
+	 *
+	 * @param funcAuthorities
+	 * @return
+	 */
+	boolean hasFunc(String[] funcAuthorities);
 
-    /**
-     * matched any one function authority
-     *
-     * @param funcAuthorities
-     * @return
-     */
-    boolean hasAnyFunc(String[] funcAuthorities);
+	/**
+	 * matched any one function authority
+	 *
+	 * @param funcAuthorities
+	 * @return
+	 */
+	boolean hasAnyFunc(String[] funcAuthorities);
 
-    /**
-     * multiple data authorities
-     *
-     * @param dataAuthorities
-     * @return
-     */
-    boolean hasData(String[] dataAuthorities);
+	/**
+	 * multiple data authorities
+	 *
+	 * @param dataAuthorities
+	 * @return
+	 */
+	boolean hasData(String[] dataAuthorities);
 
-    /**
-     * matched any one data authority
-     *
-     * @param dataAuthorities
-     * @return
-     */
-    boolean hasAnyData(String[] dataAuthorities);
+	/**
+	 * matched any one data authority
+	 *
+	 * @param dataAuthorities
+	 * @return
+	 */
+	boolean hasAnyData(String[] dataAuthorities);
 }

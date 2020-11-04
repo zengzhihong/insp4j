@@ -17,12 +17,13 @@
 package cn.is4j.insp.reactive.example.controller;
 
 import cn.is4j.insp.core.annotation.Insp;
+import reactor.core.publisher.Mono;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
 
 /**
  * @author zengzhihong
@@ -30,9 +31,9 @@ import reactor.core.publisher.Mono;
 @Component
 public class UserHandler {
 
-    @Insp("hasFunc('user:list')")
-    public Mono<ServerResponse> helloUser(ServerRequest request) {
-        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
-                .body(BodyInserters.fromValue("Hello, User!"));
-    }
+	@Insp("hasFunc('user:list')")
+	public Mono<ServerResponse> helloUser(ServerRequest request) {
+		return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+				.body(BodyInserters.fromValue("Hello, User!"));
+	}
 }

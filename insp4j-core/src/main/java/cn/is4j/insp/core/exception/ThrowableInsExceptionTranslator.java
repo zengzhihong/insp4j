@@ -23,9 +23,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ThrowableInsExceptionTranslator implements InspExceptionTranslator {
-    @Override
-    public Object translate(InspException e) {
-        log.error("insp exception", e);
-        throw e;
-    }
+	@Override
+	public Object translate(InspException e) {
+		log.error("insp exception", e);
+		throw e;
+	}
 }

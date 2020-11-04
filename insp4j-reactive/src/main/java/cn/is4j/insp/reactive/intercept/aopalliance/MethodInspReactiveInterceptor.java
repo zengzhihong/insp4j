@@ -30,22 +30,25 @@ import org.aopalliance.intercept.MethodInvocation;
  * @author zengzhihong
  */
 @Slf4j
-public class MethodInspReactiveInterceptor extends AbstractInspInterceptor implements MethodInterceptor {
+public class MethodInspReactiveInterceptor extends AbstractInspInterceptor
+		implements MethodInterceptor {
 
-    private final InspReactiveAuthenticationService authenticationService;
+	private final InspReactiveAuthenticationService authenticationService;
 
-    public MethodInspReactiveInterceptor(InspReactiveAuthenticationService authenticationService) {
-        super(new DefaultInspReactiveExceptionTranslator());
-        this.authenticationService = authenticationService;
-    }
+	public MethodInspReactiveInterceptor(
+			InspReactiveAuthenticationService authenticationService) {
+		super(new DefaultInspReactiveExceptionTranslator());
+		this.authenticationService = authenticationService;
+	}
 
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        return super.proceed(invocation);
-    }
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		return super.proceed(invocation);
+	}
 
-    @Override
-    public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
-        return authenticationService.loadAuthentication(ReactiveRequestContextHolder.getRequest(), metadataSource);
-    }
+	@Override
+	public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
+		return authenticationService.loadAuthentication(
+				ReactiveRequestContextHolder.getRequest(), metadataSource);
+	}
 }

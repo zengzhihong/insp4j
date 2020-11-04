@@ -33,26 +33,28 @@ import java.util.Objects;
  * @author zengzhihong
  */
 @Slf4j
-public class MethodInspWebInterceptor extends AbstractInspInterceptor implements MethodInterceptor {
+public class MethodInspWebInterceptor extends AbstractInspInterceptor
+		implements MethodInterceptor {
 
-    private final InspWebAuthenticationService authenticationService;
+	private final InspWebAuthenticationService authenticationService;
 
-    public MethodInspWebInterceptor(InspWebAuthenticationService authenticationService) {
-        super(new DefaultInspWebExceptionTranslator());
-        this.authenticationService = authenticationService;
-    }
+	public MethodInspWebInterceptor(InspWebAuthenticationService authenticationService) {
+		super(new DefaultInspWebExceptionTranslator());
+		this.authenticationService = authenticationService;
+	}
 
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        return super.proceed(invocation);
-    }
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		return super.proceed(invocation);
+	}
 
-    @Override
-    public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
-        return authenticationService.loadAuthentication(
-                ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
-                        .getRequest(), metadataSource);
-    }
-
+	@Override
+	public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
+		return authenticationService
+				.loadAuthentication(((ServletRequestAttributes) Objects
+						.requireNonNull(RequestContextHolder.getRequestAttributes()))
+								.getRequest(),
+						metadataSource);
+	}
 
 }

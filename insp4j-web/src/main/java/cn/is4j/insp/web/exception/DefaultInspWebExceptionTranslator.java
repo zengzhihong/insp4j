@@ -33,21 +33,21 @@ import java.util.Objects;
  */
 public class DefaultInspWebExceptionTranslator implements InspExceptionTranslator {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    @SneakyThrows
-    @Override
-    public Object translate(InspException e) {
-        HttpServletResponse response =
-                ((ServletRequestAttributes) Objects.requireNonNull(
-                        RequestContextHolder.getRequestAttributes())).getResponse();
-        response.setCharacterEncoding(InspConst.UTF8);
-        response.setContentType(InspConst.HTTP_CONTENT_TYPE_JSON);
-        response.setStatus(e.getCode());
-        final ObjectNode objectNode = OBJECT_MAPPER.createObjectNode();
-        objectNode.put("code", e.getCode());
-        objectNode.put("message", e.getMessage());
-        response.getOutputStream().write(OBJECT_MAPPER.writeValueAsBytes(objectNode));
-        return null;
-    }
+	@SneakyThrows
+	@Override
+	public Object translate(InspException e) {
+		HttpServletResponse response = ((ServletRequestAttributes) Objects
+				.requireNonNull(RequestContextHolder.getRequestAttributes()))
+						.getResponse();
+		response.setCharacterEncoding(InspConst.UTF8);
+		response.setContentType(InspConst.HTTP_CONTENT_TYPE_JSON);
+		response.setStatus(e.getCode());
+		final ObjectNode objectNode = OBJECT_MAPPER.createObjectNode();
+		objectNode.put("code", e.getCode());
+		objectNode.put("message", e.getMessage());
+		response.getOutputStream().write(OBJECT_MAPPER.writeValueAsBytes(objectNode));
+		return null;
+	}
 }

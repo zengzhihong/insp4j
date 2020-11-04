@@ -21,6 +21,7 @@ import cn.is4j.insp.core.intercept.aopalliance.InspAnnotationBeanPostProcessor;
 import cn.is4j.insp.reactive.filter.ReactiveRequestContextFilter;
 import cn.is4j.insp.reactive.intercept.aopalliance.MethodInspReactiveInterceptor;
 import cn.is4j.insp.reactive.service.InspReactiveAuthenticationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -34,34 +35,34 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class InspReactiveConfiguration {
 
-    private InspReactiveAuthenticationService authenticationService;
+	private InspReactiveAuthenticationService authenticationService;
 
-    @Autowired(required = false)
-    public void setAuthenticationService(InspReactiveAuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
+	@Autowired(required = false)
+	public void setAuthenticationService(
+			InspReactiveAuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
 
-    @Bean
-    public ReactiveRequestContextFilter reactiveRequestContextFilter() {
-        return new ReactiveRequestContextFilter();
-    }
+	@Bean
+	public ReactiveRequestContextFilter reactiveRequestContextFilter() {
+		return new ReactiveRequestContextFilter();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public MethodInspReactiveInterceptor methodInspInterceptor() {
-        if (null == authenticationService) {
-            throw new InspException(
-                    "required a bean of type '" +
-                            InspReactiveAuthenticationService.class.getName() +
-                            "' that could not be found");
-        }
-        return new MethodInspReactiveInterceptor(authenticationService);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public MethodInspReactiveInterceptor methodInspInterceptor() {
+		if (null == authenticationService) {
+			throw new InspException("required a bean of type '"
+					+ InspReactiveAuthenticationService.class.getName()
+					+ "' that could not be found");
+		}
+		return new MethodInspReactiveInterceptor(authenticationService);
+	}
 
-    @Bean
-    public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(
-            MethodInspReactiveInterceptor methodInspWebInterceptor) {
-        return new InspAnnotationBeanPostProcessor(methodInspWebInterceptor);
-    }
+	@Bean
+	public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(
+			MethodInspReactiveInterceptor methodInspWebInterceptor) {
+		return new InspAnnotationBeanPostProcessor(methodInspWebInterceptor);
+	}
 
 }

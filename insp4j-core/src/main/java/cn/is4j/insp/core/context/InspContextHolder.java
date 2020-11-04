@@ -21,40 +21,40 @@ package cn.is4j.insp.core.context;
  */
 public class InspContextHolder {
 
-    private static InspContextHolderStrategy strategy;
-    private static int initializeCount = 0;
+	private static InspContextHolderStrategy strategy;
+	private static int initializeCount = 0;
 
-    static {
-        initialize();
-    }
+	static {
+		initialize();
+	}
 
-    private static void initialize() {
-        strategy = new ThreadLocalInspContextHolderStrategy();
-        initializeCount++;
-    }
+	private static void initialize() {
+		strategy = new ThreadLocalInspContextHolderStrategy();
+		initializeCount++;
+	}
 
-    /**
-     * Primarily for troubleshooting purposes, this method shows how many times the class
-     *
-     * @return
-     */
-    public static int getInitializeCount() {
-        return initializeCount;
-    }
+	/**
+	 * Primarily for troubleshooting purposes, this method shows how many times the class
+	 *
+	 * @return
+	 */
+	public static int getInitializeCount() {
+		return initializeCount;
+	}
 
-    public static void clearContext() {
-        strategy.clearContext();
-    }
+	public static void clearContext() {
+		strategy.clearContext();
+	}
 
-    public static InspContext getContext() {
-        return strategy.getContext();
-    }
+	public static InspContext getContext() {
+		return strategy.getContext();
+	}
 
-    public static void setContext(InspContext context) {
-        strategy.setContext(context);
-    }
+	public static void setContext(InspContext context) {
+		strategy.setContext(context);
+	}
 
-    public static InspContext createEmptyContext(String groupName) {
-        return strategy.createEmptyContext();
-    }
+	public static InspContext createEmptyContext(String groupName) {
+		return strategy.createEmptyContext();
+	}
 }

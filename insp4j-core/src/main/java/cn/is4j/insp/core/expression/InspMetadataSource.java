@@ -26,15 +26,14 @@ import lombok.Setter;
 @Setter
 public class InspMetadataSource {
 
-    private String groupName;
+	private String groupName;
 
-    private String expressionString;
+	private String expressionString;
 
-    private Object[] expressionArgs;
+	private Object[] expressionArgs;
 
-
-    public InspMetadataSource(String groupName, String expressionString) {
-        this.groupName = groupName;
-        this.expressionString = expressionString;
-    }
+	public InspMetadataSource(String groupName, String expressionString) {
+		this.groupName = groupName;
+		this.expressionString = expressionString;
+	}
 }

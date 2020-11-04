@@ -35,47 +35,51 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author zengzhihong
  */
 @Component
-public class InspReactiveAuthenticationServiceImpl implements InspReactiveAuthenticationService {
+public class InspReactiveAuthenticationServiceImpl
+		implements InspReactiveAuthenticationService {
 
-    @Override
-    public InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request, InspMetadataSource metadataSource) {
-        final Long userId = getUserId();
-        List<String> funcAuthorities = RedisStore.get(metadataSource.getGroupName(), userId, 0);
-        List<String> dataAuthorities = RedisStore.get(metadataSource.getGroupName(), userId, 1);
-        return new InspAuthentication(userId + "", funcAuthorities, dataAuthorities);
-        // 如果是超管可以这样new
-        // return InspAuthentication.createHighestAuth(userId + "");
-    }
+	@Override
+	public InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request,
+			InspMetadataSource metadataSource) {
+		final Long userId = getUserId();
+		List<String> funcAuthorities = RedisStore.get(metadataSource.getGroupName(),
+				userId, 0);
+		List<String> dataAuthorities = RedisStore.get(metadataSource.getGroupName(),
+				userId, 1);
+		return new InspAuthentication(userId + "", funcAuthorities, dataAuthorities);
+		// 如果是超管可以这样new
+		// return InspAuthentication.createHighestAuth(userId + "");
+	}
 
+	private Long getUserId() {
+		return ThreadLocalRandom.current().nextLong();
+	}
 
-    static class RedisStore {
+	static class RedisStore {
 
-        public static List<String> get(String groupName, Long userId, int funcOrData) {
+		public static List<String> get(String groupName, Long userId, int funcOrData) {
 
-            String redisKey = groupName + ":" + userId + ":" + funcOrData;
+			String redisKey = groupName + ":" + userId + ":" + funcOrData;
 
-            return getFromRedis(redisKey, funcOrData);
-        }
+			return getFromRedis(redisKey, funcOrData);
+		}
 
-        private static List<String> getFromRedis(String key, int funcOrData) {
+		private static List<String> getFromRedis(String key, int funcOrData) {
 
-            if (funcOrData == 0) {
-                return Arrays.asList("user:list", "user:save", "user:get", "shop:list", "enterprise:list");
-            }
-            if (funcOrData == 1) {
-                return new ArrayList<String>() {
-                    {
-                        for (int i = 0; i < 10; i++) {
-                            add(i + "");
-                        }
-                    }
-                };
-            }
-            throw new IllegalArgumentException("error funcOrData");
-        }
-    }
-
-    private Long getUserId() {
-        return ThreadLocalRandom.current().nextLong();
-    }
+			if (funcOrData == 0) {
+				return Arrays.asList("user:list", "user:save", "user:get", "shop:list",
+						"enterprise:list");
+			}
+			if (funcOrData == 1) {
+				return new ArrayList<String>() {
+					{
+						for (int i = 0; i < 10; i++) {
+							add(i + "");
+						}
+					}
+				};
+			}
+			throw new IllegalArgumentException("error funcOrData");
+		}
+	}
 }

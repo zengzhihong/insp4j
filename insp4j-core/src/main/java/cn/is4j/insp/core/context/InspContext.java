@@ -16,34 +16,32 @@
 
 package cn.is4j.insp.core.context;
 
+import java.io.Serializable;
+
 import cn.is4j.insp.core.constants.InspConst;
 import cn.is4j.insp.core.service.InspAuthentication;
-
-import java.io.Serializable;
 
 /**
  * @author zengzhihong
  */
 public interface InspContext extends Serializable {
 
+	/**
+	 * default groupName
+	 *
+	 * @return
+	 */
+	default InspAuthentication getAuthentication() {
+		return getAuthentication(InspConst.DEFAULT_GROUP_NAME);
+	}
 
-    /**
-     * default groupName
-     *
-     * @return
-     */
-    default InspAuthentication getAuthentication() {
-        return getAuthentication(InspConst.DEFAULT_GROUP_NAME);
-    }
+	/**
+	 * get by groupName
+	 *
+	 * @param groupName
+	 * @return
+	 */
+	InspAuthentication getAuthentication(String groupName);
 
-    /**
-     * get by groupName
-     *
-     * @param groupName
-     * @return
-     */
-    InspAuthentication getAuthentication(String groupName);
-
-
-    void setAuthentication(String groupName, InspAuthentication authentication);
+	void setAuthentication(String groupName, InspAuthentication authentication);
 }
