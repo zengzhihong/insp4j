@@ -16,7 +16,7 @@
 
 package cn.is4j.insp.core.expression;
 
-import cn.is4j.insp.core.service.InspAuthentication;
+import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.AopInfrastructureBean;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
@@ -24,10 +24,10 @@ import org.springframework.expression.ExpressionParser;
 /**
  * @author zengzhihong
  */
-public interface InspExpressionHandler<T> extends AopInfrastructureBean {
+public interface InspExpressionHandler extends AopInfrastructureBean {
 
     ExpressionParser getExpressionParser();
 
-    EvaluationContext createEvaluationContext(InspAuthentication authentication, T invocation);
+    EvaluationContext createEvaluationContext(MethodInvocation invocation);
 
 }

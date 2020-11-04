@@ -19,19 +19,28 @@ package cn.is4j.insp.core.intercept.aopalliance;
 import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.core.context.InspContextHolder;
 import cn.is4j.insp.core.exception.InspException;
-import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.exception.ThrowableInsExceptionTranslator;
 import cn.is4j.insp.core.exception.UnAuthenticationInspException;
+import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.expression.InspExpressionHandler;
-import cn.is4j.insp.core.expression.MethodInspInterceptorMetadataSource;
+import cn.is4j.insp.core.expression.InspExpressionInvocationHandler;
+import cn.is4j.insp.core.expression.InspExpressionOperations;
+import cn.is4j.insp.core.expression.InspExpressionRoot;
+import cn.is4j.insp.core.expression.InspMetadataSource;
+import cn.is4j.insp.core.expression.method.MethodInspEvaluationContext;
 import cn.is4j.insp.core.service.InspAuthentication;
 import lombok.Setter;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.BeanResolver;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +49,15 @@ import java.util.List;
  *
  * @author zengzhihong
  */
-public abstract class AbstractInspInterceptor {
+public abstract class AbstractInspInterceptor implements InspInterceptor, ApplicationContextAware {
 
     @Setter
-    private InspExpressionHandler<MethodInvocation> expressionHandler = new DefaultMethodInspExpressionHandler();
+    private InspExpressionHandler expressionHandler = new DefaultMethodInspExpressionHandler();
 
     private final InspExceptionTranslator exceptionTranslator;
+
+    private BeanResolver br;
+
 
     public AbstractInspInterceptor() {
         this.exceptionTranslator = new ThrowableInsExceptionTranslator();
@@ -57,13 +69,20 @@ public abstract class AbstractInspInterceptor {
 
     protected Object proceed(MethodInvocation invocation) throws Throwable {
         try {
-            List<MethodInspInterceptorMetadataSource> metadataSources = obtainMetadataSource(invocation);
-            for (MethodInspInterceptorMetadataSource metadataSource : metadataSources) {
+            List<InspMetadataSource> metadataSources = obtainMetadataSource(invocation);
+            for (InspMetadataSource metadataSource : metadataSources) {
                 if (!StringUtils.hasText(metadataSource.getExpressionString())) {
                     continue;
                 }
-                EvaluationContext ctx = expressionHandler.createEvaluationContext(
-                        metadataSource.getAuthentication(), metadataSource.getInvocation());
+                MethodInspEvaluationContext ctx =
+                        (MethodInspEvaluationContext) expressionHandler.createEvaluationContext(invocation);
+                final InspExpressionOperations expressionOperations = (InspExpressionOperations) Proxy.newProxyInstance(
+                        InspExpressionRoot.class.getClassLoader(),
+                        InspExpressionRoot.class.getInterfaces(),
+                        new InspExpressionInvocationHandler(new InspExpressionRoot(), this, metadataSource));
+                ctx.setRootObject(expressionOperations);
+                ctx.setBeanResolver(br);
+                // do invoke
                 final Boolean expressionValue = expressionHandler.getExpressionParser()
                         .parseExpression(metadataSource.getExpressionString()).getValue(ctx, Boolean.class);
                 if (null == expressionValue || !expressionValue) {
@@ -90,32 +109,35 @@ public abstract class AbstractInspInterceptor {
     }
 
 
-    protected List<MethodInspInterceptorMetadataSource> obtainMetadataSource(MethodInvocation invocation) {
+    protected List<InspMetadataSource> obtainMetadataSource(MethodInvocation invocation) {
         Insp onClass = AnnotationUtils.findAnnotation(invocation.getMethod().getDeclaringClass(), Insp.class);
         Insp onMethod = AnnotationUtils.findAnnotation(invocation.getMethod(), Insp.class);
-        List<MethodInspInterceptorMetadataSource> metadataSources = new ArrayList<>();
+        List<InspMetadataSource> metadataSources = new ArrayList<>();
         if (onClass != null) {
             metadataSources.add(
-                    new MethodInspInterceptorMetadataSource(
-                            invocation, loadAuthenticationCtx(onClass.groupName()), onClass.value()));
+                    new InspMetadataSource(onClass.groupName(), onClass.value()));
         }
         if (onMethod != null) {
             metadataSources.add(
-                    new MethodInspInterceptorMetadataSource(
-                            invocation, loadAuthenticationCtx(onMethod.groupName()), onMethod.value()));
+                    new InspMetadataSource(onMethod.groupName(), onMethod.value()));
         }
         return metadataSources;
     }
 
-    private InspAuthentication loadAuthenticationCtx(String groupName) {
-        InspAuthentication authentication = InspContextHolder.getContext().getAuthentication(groupName);
+    @Override
+    public InspAuthentication onAuthentication(InspMetadataSource metadataSource) {
+        InspAuthentication authentication = InspContextHolder.getContext().getAuthentication(metadataSource.getGroupName());
         if (null == authentication) {
-            authentication = loadAuthentication(groupName);
-            InspContextHolder.getContext().setAuthentication(groupName, authentication);
+            authentication = loadAuthentication(metadataSource);
+            InspContextHolder.getContext().setAuthentication(metadataSource.getGroupName(), authentication);
         }
         return authentication;
     }
 
-    protected abstract InspAuthentication loadAuthentication(String groupName);
+    protected abstract InspAuthentication loadAuthentication(InspMetadataSource metadataSource);
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.br = new BeanFactoryResolver(applicationContext);
+    }
 }

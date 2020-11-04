@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.springboot.web.example.service;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.service.InspAuthentication;
 import cn.is4j.insp.web.service.InspWebAuthenticationService;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 需要实现 {@link InspWebAuthenticationService} 交由spring ioc
@@ -36,10 +37,10 @@ import java.util.Random;
 public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationService {
 
     @Override
-    public InspAuthentication loadAuthentication(HttpServletRequest request, String inspGroupName) {
+    public InspAuthentication loadAuthentication(HttpServletRequest request, InspMetadataSource metadataSource) {
         final Long userId = getUserId();
-        List<String> funcAuthorities = RedisStore.get(inspGroupName, userId, 0);
-        List<String> dataAuthorities = RedisStore.get(inspGroupName, userId, 1);
+        List<String> funcAuthorities = RedisStore.get(metadataSource.getGroupName(), userId, 0);
+        List<String> dataAuthorities = RedisStore.get(metadataSource.getGroupName(), userId, 1);
         return new InspAuthentication(userId + "", funcAuthorities, dataAuthorities);
         // 如果是超管可以这样new
         // return InspAuthentication.createHighestAuth(userId + "");
@@ -77,6 +78,6 @@ public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationSe
     }
 
     private Long getUserId() {
-        return new Random().nextLong();
+        return ThreadLocalRandom.current().nextLong();
     }
 }

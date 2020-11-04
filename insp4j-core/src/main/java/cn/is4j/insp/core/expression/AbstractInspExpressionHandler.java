@@ -16,12 +16,7 @@
 
 package cn.is4j.insp.core.expression;
 
-import cn.is4j.insp.core.service.InspAuthentication;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.expression.BeanFactoryResolver;
-import org.springframework.expression.BeanResolver;
+import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -31,10 +26,9 @@ import org.springframework.util.Assert;
 /**
  * @author zengzhihong
  */
-public abstract class AbstractInspExpressionHandler<T> implements InspExpressionHandler<T>, ApplicationContextAware {
+public abstract class AbstractInspExpressionHandler implements InspExpressionHandler {
 
     private ExpressionParser expressionParser = new SpelExpressionParser();
-    private BeanResolver br;
 
     @Override
     public ExpressionParser getExpressionParser() {
@@ -47,26 +41,11 @@ public abstract class AbstractInspExpressionHandler<T> implements InspExpression
     }
 
     @Override
-    public final EvaluationContext createEvaluationContext(InspAuthentication authentication, T invocation) {
-        final InspExpressionOperations inspExpressionRoot = createInspExpressionRoot(authentication, invocation);
-        StandardEvaluationContext ctx = createEvaluationContextInternal(authentication, invocation);
-        ctx.setBeanResolver(br);
-        ctx.setRootObject(inspExpressionRoot);
-        return ctx;
+    public final EvaluationContext createEvaluationContext(MethodInvocation invocation) {
+        return createEvaluationContextInternal(invocation);
     }
 
-
-    protected StandardEvaluationContext createEvaluationContextInternal(InspAuthentication authentication,
-                                                                        T invocation) {
+    protected StandardEvaluationContext createEvaluationContextInternal(MethodInvocation invocation) {
         return new StandardEvaluationContext();
-    }
-
-    protected abstract InspExpressionOperations createInspExpressionRoot(InspAuthentication authentication,
-                                                                         T invocation);
-
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.br = new BeanFactoryResolver(applicationContext);
     }
 }

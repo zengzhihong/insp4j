@@ -18,6 +18,8 @@ package cn.is4j.insp.springboot.web.example.controller;
 
 import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.springboot.web.example.ExampleGroupConst;
+import lombok.Data;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,6 +52,25 @@ public class FuncDataGroupExampleController {
     @RequestMapping("/listEnterprise")
     public String listEnterprise(String shopId) {
         return "ok2";
+    }
+
+
+    @Insp(value = "hasFuncData({'enterprise:list'},#param.shopId)", groupName =
+            ExampleGroupConst.GROUP_ENTERPRISE)
+    @RequestMapping("/postEnterprise")
+    public String postEnterprise(@RequestBody PostEnterpriseParam param) {
+        return "postEnterprise";
+    }
+
+    @Insp(value = "{#a,#a}")
+    @RequestMapping("/a")
+    public String a(Long a) {
+        return "a";
+    }
+    @Data
+    static class PostEnterpriseParam{
+        private String shopId;
+        private Integer optId;
     }
 
 }

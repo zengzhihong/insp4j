@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.web.intercept.aopalliance;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.intercept.aopalliance.AbstractInspInterceptor;
 import cn.is4j.insp.core.service.InspAuthentication;
 import cn.is4j.insp.web.exception.DefaultInspWebExceptionTranslator;
@@ -47,10 +48,11 @@ public class MethodInspWebInterceptor extends AbstractInspInterceptor implements
     }
 
     @Override
-    protected InspAuthentication loadAuthentication(String groupName) {
+    public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
         return authenticationService.loadAuthentication(
                 ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
-                        .getRequest(), groupName);
+                        .getRequest(), metadataSource);
     }
+
 
 }

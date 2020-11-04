@@ -23,7 +23,6 @@ import org.springframework.aop.Pointcut;
 import org.springframework.aop.support.AbstractPointcutAdvisor;
 import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
-import org.springframework.util.Assert;
 
 /**
  * @author zengzhihong
@@ -34,7 +33,9 @@ public class MethodInspAnnotationAdvisor extends AbstractPointcutAdvisor {
     private final Pointcut pointcut;
 
     public MethodInspAnnotationAdvisor(MethodInterceptor interceptor) {
-        Assert.notNull(interceptor, "The advice cannot be null");
+        if (null == interceptor) {
+            throw new IllegalArgumentException("The advice cannot be null");
+        }
         this.interceptor = interceptor;
         this.pointcut = buildPointcut();
     }

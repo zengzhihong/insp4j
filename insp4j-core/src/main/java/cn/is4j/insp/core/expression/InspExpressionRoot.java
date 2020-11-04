@@ -17,91 +17,50 @@
 package cn.is4j.insp.core.expression;
 
 import cn.is4j.insp.core.service.InspAuthentication;
+import lombok.Setter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author zengzhihong
  */
 public class InspExpressionRoot implements InspExpressionOperations {
 
-    private final InspAuthentication authentication;
+    @Setter
+    private InspAuthentication authentication;
 
-    public InspExpressionRoot(InspAuthentication authentication) {
-        if (authentication == null) {
-            throw new IllegalArgumentException("Authentication object cannot be null");
-        }
-        this.authentication = authentication;
+    @Override
+    public boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities) {
+        return hasFunc(funcAuthorities) && hasData(dataAuthorities);
     }
 
-    /**
-     * single function authority
-     *
-     * @param funcAuthority
-     * @return
-     */
     @Override
-    public boolean hasFunc(String funcAuthority) {
-        return hasAnyFunc(funcAuthority);
+    public boolean hasFunc(String[] funcAuthorities) {
+        return matches(true, authentication.getFuncAuthorities(), funcAuthorities);
     }
 
-    /**
-     * single function、data authority composable
-     *
-     * @param funcAuthority
-     * @param dataAuthority
-     * @return
-     */
     @Override
-    public boolean hasFuncData(String funcAuthority, String dataAuthority) {
-        return hasFunc(funcAuthority) && hasData(dataAuthority);
+    public boolean hasAnyFunc(String[] funcAuthorities) {
+        return matches(false, authentication.getFuncAuthorities(), funcAuthorities);
     }
 
-    /**
-     * matched any one function authority
-     *
-     * @param funcAuthority
-     * @return
-     */
     @Override
-    public boolean hasAnyFunc(String... funcAuthority) {
+    public boolean hasData(String[] dataAuthorities) {
+        return matches(true, authentication.getDataAuthorities(), dataAuthorities);
+    }
+
+    @Override
+    public boolean hasAnyData(String[] dataAuthorities) {
+        return matches(false, authentication.getDataAuthorities(), dataAuthorities);
+    }
+
+    private boolean matches(boolean allMatches, List<String> authenticationAuthorities, String... inspAuthorities) {
         if (authentication.isHighestAuth()) {
             return true;
         }
-        for (String s : funcAuthority) {
-            if (authentication.getFuncAuthorities().contains(s)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * single data authority
-     *
-     * @param dataAuthority
-     * @return
-     */
-    @Override
-    public boolean hasData(String dataAuthority) {
-        return hasAnyData(dataAuthority);
-    }
-
-    /**
-     * matched any one data authority
-     *
-     * @param dataAuthority
-     * @return
-     */
-    @Override
-    public boolean hasAnyData(String... dataAuthority) {
-        if (authentication.isHighestAuth()) {
-            return true;
-        }
-        for (String s : dataAuthority) {
-            if (authentication.getDataAuthorities().contains(s)) {
-                return true;
-            }
-        }
-        return false;
+        return allMatches ? Arrays.stream(inspAuthorities).allMatch(authenticationAuthorities::contains) :
+                Arrays.stream(inspAuthorities).anyMatch(authenticationAuthorities::contains);
     }
 
 }

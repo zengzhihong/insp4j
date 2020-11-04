@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.reactive.service;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.service.InspAuthentication;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import reactor.core.publisher.Mono;
@@ -25,6 +26,6 @@ import reactor.core.publisher.Mono;
  */
 public interface InspReactiveAuthenticationService {
 
-    InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request, String inspGroupName);
+    InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request, InspMetadataSource metadataSource);
 
 }

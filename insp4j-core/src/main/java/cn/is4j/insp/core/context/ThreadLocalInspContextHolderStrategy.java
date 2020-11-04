@@ -16,8 +16,6 @@
 
 package cn.is4j.insp.core.context;
 
-import org.springframework.util.Assert;
-
 /**
  * @author zengzhihong
  */
@@ -43,7 +41,9 @@ public class ThreadLocalInspContextHolderStrategy implements InspContextHolderSt
 
     @Override
     public void setContext(InspContext context) {
-        Assert.notNull(context, "Only non-null InspContext instances are permitted");
+        if (null == context) {
+            throw new IllegalArgumentException("Only non-null InspContext instances are permitted");
+        }
         CONTEXT_HOLDER.set(context);
     }
 

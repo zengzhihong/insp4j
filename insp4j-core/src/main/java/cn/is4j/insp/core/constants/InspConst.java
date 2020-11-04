@@ -31,4 +31,9 @@ public class InspConst {
      */
     public static final String HTTP_CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
 
+    /**
+     * default group name
+     */
+    public static final String DEFAULT_GROUP_NAME = "default";
+
 }

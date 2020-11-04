@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class InspContextImpl implements InspContext {
 
-    private Map<String, InspAuthentication> authenticationMap;
+    private final Map<String, InspAuthentication> authenticationMap;
 
     public InspContextImpl() {
         authenticationMap = new HashMap<>(2);

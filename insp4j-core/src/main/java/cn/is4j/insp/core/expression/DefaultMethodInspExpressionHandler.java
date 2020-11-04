@@ -17,7 +17,6 @@
 package cn.is4j.insp.core.expression;
 
 import cn.is4j.insp.core.expression.method.MethodInspEvaluationContext;
-import cn.is4j.insp.core.service.InspAuthentication;
 import lombok.Getter;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.DefaultParameterNameDiscoverer;
@@ -27,7 +26,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 /**
  * @author zengzhihong
  */
-public class DefaultMethodInspExpressionHandler extends AbstractInspExpressionHandler<MethodInvocation> {
+public class DefaultMethodInspExpressionHandler extends AbstractInspExpressionHandler {
 
     @Getter
     private final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
@@ -36,16 +35,8 @@ public class DefaultMethodInspExpressionHandler extends AbstractInspExpressionHa
     }
 
     @Override
-    protected StandardEvaluationContext createEvaluationContextInternal(InspAuthentication authentication,
-                                                                        MethodInvocation invocation) {
+    protected StandardEvaluationContext createEvaluationContextInternal(MethodInvocation invocation) {
         return new MethodInspEvaluationContext(invocation, getParameterNameDiscoverer());
     }
-
-    @Override
-    protected InspExpressionOperations createInspExpressionRoot(InspAuthentication authentication,
-                                                                MethodInvocation invocation) {
-        return new InspExpressionRoot(authentication);
-    }
-
 
 }

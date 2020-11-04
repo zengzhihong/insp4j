@@ -16,24 +16,25 @@
 
 package cn.is4j.insp.core.expression;
 
-import cn.is4j.insp.core.service.InspAuthentication;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author zengzhihong
  */
-@AllArgsConstructor
 @Getter
 @Setter
-public class MethodInspInterceptorMetadataSource {
+public class InspMetadataSource {
 
-    private MethodInvocation invocation;
-
-    private InspAuthentication authentication;
+    private String groupName;
 
     private String expressionString;
 
+    private Object[] expressionArgs;
+
+
+    public InspMetadataSource(String groupName, String expressionString) {
+        this.groupName = groupName;
+        this.expressionString = expressionString;
+    }
 }

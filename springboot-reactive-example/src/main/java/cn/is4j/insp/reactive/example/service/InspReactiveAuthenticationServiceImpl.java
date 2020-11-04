@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.reactive.example.service;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.service.InspAuthentication;
 import cn.is4j.insp.reactive.service.InspReactiveAuthenticationService;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -25,7 +26,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 需要实现 {@link InspReactiveAuthenticationService} 交由spring ioc
@@ -37,10 +38,10 @@ import java.util.Random;
 public class InspReactiveAuthenticationServiceImpl implements InspReactiveAuthenticationService {
 
     @Override
-    public InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request, String inspGroupName) {
+    public InspAuthentication loadAuthentication(Mono<ServerHttpRequest> request, InspMetadataSource metadataSource) {
         final Long userId = getUserId();
-        List<String> funcAuthorities = RedisStore.get(inspGroupName, userId, 0);
-        List<String> dataAuthorities = RedisStore.get(inspGroupName, userId, 1);
+        List<String> funcAuthorities = RedisStore.get(metadataSource.getGroupName(), userId, 0);
+        List<String> dataAuthorities = RedisStore.get(metadataSource.getGroupName(), userId, 1);
         return new InspAuthentication(userId + "", funcAuthorities, dataAuthorities);
         // 如果是超管可以这样new
         // return InspAuthentication.createHighestAuth(userId + "");
@@ -75,6 +76,6 @@ public class InspReactiveAuthenticationServiceImpl implements InspReactiveAuthen
     }
 
     private Long getUserId() {
-        return new Random().nextLong();
+        return ThreadLocalRandom.current().nextLong();
     }
 }

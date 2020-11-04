@@ -16,50 +16,53 @@
 
 package cn.is4j.insp.core.expression;
 
+import cn.is4j.insp.core.service.InspAuthentication;
+
 /**
  * @author zengzhihong
  */
 public interface InspExpressionOperations {
 
-    /**
-     * single function authority
-     *
-     * @param funcAuthority
-     * @return
-     */
-    boolean hasFunc(String funcAuthority);
+    void setAuthentication(InspAuthentication authentication);
 
     /**
      * single function、data authority composable
      *
-     * @param funcAuthority
-     * @param dataAuthority
+     * @param funcAuthorities
+     * @param dataAuthorities
      * @return
      */
-    boolean hasFuncData(String funcAuthority, String dataAuthority);
+    boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities);
 
+    /**
+     * multiple function authorities
+     *
+     * @param funcAuthorities
+     * @return
+     */
+    boolean hasFunc(String[] funcAuthorities);
 
     /**
      * matched any one function authority
      *
-     * @param funcAuthority
+     * @param funcAuthorities
      * @return
      */
-    boolean hasAnyFunc(String... funcAuthority);
+    boolean hasAnyFunc(String[] funcAuthorities);
 
     /**
-     * single data authority
+     * multiple data authorities
      *
-     * @param dataAuthority
+     * @param dataAuthorities
      * @return
      */
-    boolean hasData(String dataAuthority);
+    boolean hasData(String[] dataAuthorities);
 
     /**
      * matched any one data authority
      *
-     * @param dataAuthority
+     * @param dataAuthorities
      * @return
      */
-    boolean hasAnyData(String... dataAuthority);
+    boolean hasAnyData(String[] dataAuthorities);
 }

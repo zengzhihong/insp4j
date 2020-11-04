@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.reactive.intercept.aopalliance;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.intercept.aopalliance.AbstractInspInterceptor;
 import cn.is4j.insp.core.service.InspAuthentication;
 import cn.is4j.insp.reactive.ReactiveRequestContextHolder;
@@ -44,7 +45,7 @@ public class MethodInspReactiveInterceptor extends AbstractInspInterceptor imple
     }
 
     @Override
-    protected InspAuthentication loadAuthentication(String groupName) {
-        return authenticationService.loadAuthentication(ReactiveRequestContextHolder.getRequest(), groupName);
+    public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
+        return authenticationService.loadAuthentication(ReactiveRequestContextHolder.getRequest(), metadataSource);
     }
 }

@@ -18,8 +18,8 @@ package cn.is4j.insp.core.service;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.util.Assert;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class InspAuthentication {
+public class InspAuthentication implements Serializable {
 
     private String id;
 
@@ -39,8 +39,9 @@ public class InspAuthentication {
     private boolean highestAuth = false;
 
     public InspAuthentication(String id, List<String> funcAuthorities, List<String> dataAuthorities) {
-        Assert.notNull(funcAuthorities, "optAuthorities cannot be null");
-        Assert.notNull(dataAuthorities, "dataAuthorities cannot be null");
+        if (null == funcAuthorities || null == dataAuthorities) {
+            throw new IllegalArgumentException("funcAuthorities and dataAuthorities cannot be null");
+        }
         this.id = id;
         this.funcAuthorities = funcAuthorities;
         this.dataAuthorities = dataAuthorities;

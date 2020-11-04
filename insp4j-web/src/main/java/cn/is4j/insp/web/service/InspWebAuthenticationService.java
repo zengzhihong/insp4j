@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.web.service;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.service.InspAuthentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface InspWebAuthenticationService {
 
-    InspAuthentication loadAuthentication(HttpServletRequest request, String inspGroupName);
+    InspAuthentication loadAuthentication(HttpServletRequest request, InspMetadataSource metadataSource);
 
 }
