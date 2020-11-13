@@ -17,6 +17,7 @@
 package cn.is4j.insp.web.configuration;
 
 import cn.is4j.insp.core.exception.InspException;
+import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.intercept.aopalliance.InspAnnotationBeanPostProcessor;
 import cn.is4j.insp.web.intercept.aopalliance.MethodInspWebInterceptor;
 import cn.is4j.insp.web.service.InspWebAuthenticationService;
@@ -34,12 +35,19 @@ import org.springframework.context.annotation.Configuration;
 public class InspWebConfiguration {
 
     private InspWebAuthenticationService authenticationService;
+    private InspExceptionTranslator inspExceptionTranslator;
 
     @Autowired(required = false)
     public void setAuthenticationService(
             InspWebAuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
+
+    @Autowired(required = false)
+    public void setInspExceptionTranslator(InspExceptionTranslator inspExceptionTranslator) {
+        this.inspExceptionTranslator = inspExceptionTranslator;
+    }
+
 
     @Bean
     @ConditionalOnMissingBean
@@ -49,7 +57,7 @@ public class InspWebConfiguration {
                     + InspWebAuthenticationService.class.getName()
                     + "' that could not be found");
         }
-        return new MethodInspWebInterceptor(authenticationService);
+        return new MethodInspWebInterceptor(authenticationService, inspExceptionTranslator);
     }
 
     @Bean

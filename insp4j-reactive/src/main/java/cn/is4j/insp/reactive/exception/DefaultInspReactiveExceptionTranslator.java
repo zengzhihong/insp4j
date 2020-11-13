@@ -18,17 +18,17 @@ package cn.is4j.insp.reactive.exception;
 
 import cn.is4j.insp.core.exception.InspException;
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zengzhihong
  */
+@Slf4j
 public class DefaultInspReactiveExceptionTranslator implements InspExceptionTranslator {
-
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Override
     public Object translate(InspException e) {
+        log.error("insp exception", e);
         throw e;
     }
 }

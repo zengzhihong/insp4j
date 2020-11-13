@@ -52,7 +52,8 @@ import java.util.List;
 public abstract class AbstractInspInterceptor
         implements InspInterceptor, ApplicationContextAware {
 
-    private final InspExceptionTranslator exceptionTranslator;
+    @Setter
+    private InspExceptionTranslator exceptionTranslator;
     @Setter
     private InspExpressionHandler expressionHandler = new DefaultMethodInspExpressionHandler();
     private BeanResolver br;
@@ -61,9 +62,6 @@ public abstract class AbstractInspInterceptor
         this.exceptionTranslator = new ThrowableInsExceptionTranslator();
     }
 
-    public AbstractInspInterceptor(InspExceptionTranslator exceptionTranslator) {
-        this.exceptionTranslator = exceptionTranslator;
-    }
 
     protected Object proceed(MethodInvocation invocation) throws Throwable {
         try {

@@ -22,6 +22,7 @@ import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -31,6 +32,7 @@ import java.util.Objects;
 /**
  * @author zengzhihong
  */
+@Slf4j
 public class DefaultInspWebExceptionTranslator implements InspExceptionTranslator {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -38,6 +40,7 @@ public class DefaultInspWebExceptionTranslator implements InspExceptionTranslato
     @SneakyThrows
     @Override
     public Object translate(InspException e) {
+        log.error("insp exception", e);
         HttpServletResponse response = ((ServletRequestAttributes) Objects
                 .requireNonNull(RequestContextHolder.getRequestAttributes()))
                 .getResponse();

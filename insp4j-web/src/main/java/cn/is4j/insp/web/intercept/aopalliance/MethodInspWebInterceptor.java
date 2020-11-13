@@ -16,10 +16,10 @@
 
 package cn.is4j.insp.web.intercept.aopalliance;
 
+import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.intercept.aopalliance.AbstractInspInterceptor;
 import cn.is4j.insp.core.service.InspAuthentication;
-import cn.is4j.insp.web.exception.DefaultInspWebExceptionTranslator;
 import cn.is4j.insp.web.service.InspWebAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -38,9 +38,13 @@ public class MethodInspWebInterceptor extends AbstractInspInterceptor
 
     private final InspWebAuthenticationService authenticationService;
 
-    public MethodInspWebInterceptor(InspWebAuthenticationService authenticationService) {
-        super(new DefaultInspWebExceptionTranslator());
+    public MethodInspWebInterceptor(InspWebAuthenticationService authenticationService,
+                                    InspExceptionTranslator inspExceptionTranslator) {
         this.authenticationService = authenticationService;
+        if (null != inspExceptionTranslator) {
+            super.setExceptionTranslator(inspExceptionTranslator);
+        }
+
     }
 
     @Override

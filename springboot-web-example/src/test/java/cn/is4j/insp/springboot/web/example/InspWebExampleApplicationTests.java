@@ -16,15 +16,14 @@
 
 package cn.is4j.insp.springboot.web.example;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-// @EnableAspectJAutoProxy(proxyTargetClass=true)
-@SpringBootApplication
-public class InspSpringbootExampleApplication {
+@SpringBootTest
+class InspWebExampleApplicationTests {
 
-    public static void main(String[] args) {
-        SpringApplication.run(InspSpringbootExampleApplication.class, args);
+    @Test
+    void contextLoads() {
     }
 
 }

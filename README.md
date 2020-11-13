@@ -64,16 +64,16 @@ public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationSe
      * 建议走缓存 每次拦截都会进入该方法 这里只是演示
      */
     @Override
-    public InspAuthentication loadAuthentication(HttpServletRequest httpServletRequest, String groupName) {
+    public InspAuthentication loadAuthentication(HttpServletRequest httpServletRequest, InspMetadataSource metadataSource) {
         // groupName可以用来做用户/权限隔离
         // 如系统用户在sys_user表,权限在sys_authorities表，一般用户（商户）在biz_merchant表，权限在biz_merchant_authorities表
-        if("system".equals(groupName)){
+        if("system".equals(metadataSource.getGroupName())){
             String userId = SecurityUtil.getUserId();
             List<String> funcAuthorities = SecurityUtil.getUser().getAuthorities();
             List<String> dataAuthorities = deptService.listDeptId();
             return new InspAuthentication(userId, funcAuthorities, dataAuthorities);
         }
-        if("merchant".equals(groupName)){
+        if("merchant".equals(metadataSource.getGroupName())){
             String userId = merchantService.getIdByToken(httpServletRequest.getHeader("token"));
             List<String> funcAuthorities = merchantService.listFuncAuthorities(userId);
             List<String> dataAuthorities = merchantService.listDataAuthorities(userId);

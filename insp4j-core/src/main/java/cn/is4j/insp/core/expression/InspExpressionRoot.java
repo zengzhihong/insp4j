@@ -60,6 +60,9 @@ public class InspExpressionRoot implements InspExpressionOperations {
         if (authentication.isHighestAuth()) {
             return true;
         }
+        if (null == inspAuthorities) {
+            return false;
+        }
         return allMatches
                 ? Arrays.stream(inspAuthorities)
                 .allMatch(authenticationAuthorities::contains)

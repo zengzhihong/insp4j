@@ -16,11 +16,11 @@
 
 package cn.is4j.insp.reactive.intercept.aopalliance;
 
+import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.intercept.aopalliance.AbstractInspInterceptor;
 import cn.is4j.insp.core.service.InspAuthentication;
 import cn.is4j.insp.reactive.ReactiveRequestContextHolder;
-import cn.is4j.insp.reactive.exception.DefaultInspReactiveExceptionTranslator;
 import cn.is4j.insp.reactive.service.InspReactiveAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -36,9 +36,11 @@ public class MethodInspReactiveInterceptor extends AbstractInspInterceptor
     private final InspReactiveAuthenticationService authenticationService;
 
     public MethodInspReactiveInterceptor(
-            InspReactiveAuthenticationService authenticationService) {
-        super(new DefaultInspReactiveExceptionTranslator());
+            InspReactiveAuthenticationService authenticationService, InspExceptionTranslator inspExceptionTranslator) {
         this.authenticationService = authenticationService;
+        if (null != inspExceptionTranslator) {
+            super.setExceptionTranslator(inspExceptionTranslator);
+        }
     }
 
     @Override

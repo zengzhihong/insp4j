@@ -17,6 +17,7 @@
 package cn.is4j.insp.reactive.configuration;
 
 import cn.is4j.insp.core.exception.InspException;
+import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.intercept.aopalliance.InspAnnotationBeanPostProcessor;
 import cn.is4j.insp.reactive.filter.ReactiveRequestContextFilter;
 import cn.is4j.insp.reactive.intercept.aopalliance.MethodInspReactiveInterceptor;
@@ -35,11 +36,17 @@ import org.springframework.context.annotation.Configuration;
 public class InspReactiveConfiguration {
 
     private InspReactiveAuthenticationService authenticationService;
+    private InspExceptionTranslator inspExceptionTranslator;
 
     @Autowired(required = false)
     public void setAuthenticationService(
             InspReactiveAuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
+    }
+
+    @Autowired(required = false)
+    public void setInspExceptionTranslator(InspExceptionTranslator inspExceptionTranslator) {
+        this.inspExceptionTranslator = inspExceptionTranslator;
     }
 
     @Bean
@@ -55,7 +62,7 @@ public class InspReactiveConfiguration {
                     + InspReactiveAuthenticationService.class.getName()
                     + "' that could not be found");
         }
-        return new MethodInspReactiveInterceptor(authenticationService);
+        return new MethodInspReactiveInterceptor(authenticationService, inspExceptionTranslator);
     }
 
     @Bean
