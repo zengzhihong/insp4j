@@ -33,7 +33,7 @@ insp4j没有实现用户认证、授权，更没涉及到数据库层面上的�
 <dependency>
     <groupId>cn.is4j.insp</groupId>
     <artifactId>insp4j-web</artifactId>
-    <version>1.0.1</version>
+    <version>${latest.version}</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ insp4j没有实现用户认证、授权，更没涉及到数据库层面上的�
 <dependency>
     <groupId>cn.is4j.insp</groupId>
     <artifactId>insp4j-reactive</artifactId>
-    <version>1.0.1</version>
+    <version>${latest.version}</version>
 </dependency>
 ```
 
