@@ -84,7 +84,7 @@ public abstract class AbstractInspInterceptor
                         .parseExpression(metadataSource.getExpressionString())
                         .getValue(ctx, Boolean.class);
                 if (null == expressionValue || !expressionValue) {
-                    throw new UnAuthenticationInspException("deny of access");
+                    throw new UnAuthenticationInspException("deny of access", metadataSource);
                 }
             }
         } catch (Exception e) {

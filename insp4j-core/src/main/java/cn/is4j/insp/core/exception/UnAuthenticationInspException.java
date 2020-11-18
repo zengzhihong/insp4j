@@ -16,15 +16,22 @@
 
 package cn.is4j.insp.core.exception;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
+
 /**
  * @author zengzhihong
  */
 public class UnAuthenticationInspException extends InspException {
 
+
     public UnAuthenticationInspException() {
     }
 
     public UnAuthenticationInspException(String message) {
-        super(403, message);
+        this(message, null);
+    }
+
+    public UnAuthenticationInspException(String message, InspMetadataSource metadataSource) {
+        super(403, message, metadataSource);
     }
 }

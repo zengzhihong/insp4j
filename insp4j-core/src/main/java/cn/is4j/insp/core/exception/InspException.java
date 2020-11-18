@@ -16,6 +16,7 @@
 
 package cn.is4j.insp.core.exception;
 
+import cn.is4j.insp.core.expression.InspMetadataSource;
 import lombok.Getter;
 
 /**
@@ -25,13 +26,16 @@ public class InspException extends RuntimeException {
 
     @Getter
     private int code = 500;
+    @Getter
+    private InspMetadataSource metadataSource;
 
     public InspException() {
     }
 
-    public InspException(int code, String message) {
+    public InspException(int code, String message, InspMetadataSource metadataSource) {
         super(message);
         this.code = code;
+        this.metadataSource = metadataSource;
     }
 
     public InspException(String message) {
