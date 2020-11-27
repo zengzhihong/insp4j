@@ -24,6 +24,7 @@ import cn.is4j.insp.web.service.InspWebAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -34,17 +35,12 @@ import java.util.Objects;
  */
 @Slf4j
 public class MethodInspWebInterceptor extends AbstractInspInterceptor
-        implements MethodInterceptor {
+        implements MethodInterceptor, ApplicationContextAware {
 
-    private final InspWebAuthenticationService authenticationService;
-
-    public MethodInspWebInterceptor(InspWebAuthenticationService authenticationService,
-                                    InspExceptionTranslator inspExceptionTranslator) {
-        this.authenticationService = authenticationService;
+    public MethodInspWebInterceptor(InspExceptionTranslator inspExceptionTranslator) {
         if (null != inspExceptionTranslator) {
             super.setExceptionTranslator(inspExceptionTranslator);
         }
-
     }
 
     @Override
@@ -54,7 +50,7 @@ public class MethodInspWebInterceptor extends AbstractInspInterceptor
 
     @Override
     public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
-        return authenticationService
+        return getApplicationContext().getBean(InspWebAuthenticationService.class)
                 .loadAuthentication(((ServletRequestAttributes) Objects
                                 .requireNonNull(RequestContextHolder.getRequestAttributes()))
                                 .getRequest(),

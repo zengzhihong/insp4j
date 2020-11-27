@@ -16,12 +16,10 @@
 
 package cn.is4j.insp.reactive.configuration;
 
-import cn.is4j.insp.core.exception.InspException;
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.intercept.aopalliance.InspAnnotationBeanPostProcessor;
 import cn.is4j.insp.reactive.filter.ReactiveRequestContextFilter;
 import cn.is4j.insp.reactive.intercept.aopalliance.MethodInspReactiveInterceptor;
-import cn.is4j.insp.reactive.service.InspReactiveAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -35,14 +33,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class InspReactiveConfiguration {
 
-    private InspReactiveAuthenticationService authenticationService;
     private InspExceptionTranslator inspExceptionTranslator;
-
-    @Autowired(required = false)
-    public void setAuthenticationService(
-            InspReactiveAuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
 
     @Autowired(required = false)
     public void setInspExceptionTranslator(InspExceptionTranslator inspExceptionTranslator) {
@@ -57,12 +48,7 @@ public class InspReactiveConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public MethodInspReactiveInterceptor methodInspInterceptor() {
-        if (null == authenticationService) {
-            throw new InspException("required a bean of type '"
-                    + InspReactiveAuthenticationService.class.getName()
-                    + "' that could not be found");
-        }
-        return new MethodInspReactiveInterceptor(authenticationService, inspExceptionTranslator);
+        return new MethodInspReactiveInterceptor(inspExceptionTranslator);
     }
 
     @Bean

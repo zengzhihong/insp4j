@@ -33,11 +33,7 @@ import org.aopalliance.intercept.MethodInvocation;
 public class MethodInspReactiveInterceptor extends AbstractInspInterceptor
         implements MethodInterceptor {
 
-    private final InspReactiveAuthenticationService authenticationService;
-
-    public MethodInspReactiveInterceptor(
-            InspReactiveAuthenticationService authenticationService, InspExceptionTranslator inspExceptionTranslator) {
-        this.authenticationService = authenticationService;
+    public MethodInspReactiveInterceptor(InspExceptionTranslator inspExceptionTranslator) {
         if (null != inspExceptionTranslator) {
             super.setExceptionTranslator(inspExceptionTranslator);
         }
@@ -50,7 +46,7 @@ public class MethodInspReactiveInterceptor extends AbstractInspInterceptor
 
     @Override
     public InspAuthentication loadAuthentication(InspMetadataSource metadataSource) {
-        return authenticationService.loadAuthentication(
+        return getApplicationContext().getBean(InspReactiveAuthenticationService.class).loadAuthentication(
                 ReactiveRequestContextHolder.getRequest(), metadataSource);
     }
 }

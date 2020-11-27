@@ -30,6 +30,7 @@ import cn.is4j.insp.core.expression.InspExpressionRoot;
 import cn.is4j.insp.core.expression.InspMetadataSource;
 import cn.is4j.insp.core.expression.method.MethodInspEvaluationContext;
 import cn.is4j.insp.core.service.InspAuthentication;
+import lombok.Getter;
 import lombok.Setter;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.beans.BeansException;
@@ -52,6 +53,8 @@ import java.util.List;
 public abstract class AbstractInspInterceptor
         implements InspInterceptor, ApplicationContextAware {
 
+    @Getter
+    private ApplicationContext applicationContext;
     @Setter
     private InspExceptionTranslator exceptionTranslator;
     @Setter
@@ -141,6 +144,7 @@ public abstract class AbstractInspInterceptor
     @Override
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
+        this.applicationContext = applicationContext;
         this.br = new BeanFactoryResolver(applicationContext);
     }
 }
