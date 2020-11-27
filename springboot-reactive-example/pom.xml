@@ -59,7 +59,7 @@
         <dependency>
             <groupId>cn.is4j.insp</groupId>
             <artifactId>insp4j-reactive</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
     </dependencies>
 
