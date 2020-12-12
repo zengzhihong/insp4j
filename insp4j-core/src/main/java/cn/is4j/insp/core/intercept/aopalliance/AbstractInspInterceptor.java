@@ -68,6 +68,7 @@ public abstract class AbstractInspInterceptor
 
     protected Object proceed(MethodInvocation invocation) throws Throwable {
         try {
+            // support the annotation on class and on method
             List<InspMetadataSource> metadataSources = obtainMetadataSource(invocation);
             for (InspMetadataSource metadataSource : metadataSources) {
                 if (!StringUtils.hasText(metadataSource.getExpressionString())) {

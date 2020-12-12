@@ -36,25 +36,33 @@ public class InspAuthentication implements Serializable {
 
     private List<String> dataAuthorities;
 
+    private List<String> roles;
+
     private boolean highestAuth = false;
 
+    public InspAuthentication() {
+    }
+
+    public InspAuthentication(String id, List<String> funcAuthorities, List<String> dataAuthorities) {
+        this(id, funcAuthorities, dataAuthorities, null);
+    }
+
     public InspAuthentication(String id, List<String> funcAuthorities,
-                              List<String> dataAuthorities) {
-        if (null == funcAuthorities || null == dataAuthorities) {
-            throw new IllegalArgumentException(
-                    "funcAuthorities and dataAuthorities cannot be null");
-        }
+                              List<String> dataAuthorities, List<String> roles) {
         this.id = id;
-        this.funcAuthorities = funcAuthorities;
-        this.dataAuthorities = dataAuthorities;
+        this.funcAuthorities = defaultEmptyListIfNull(funcAuthorities);
+        this.dataAuthorities = defaultEmptyListIfNull(dataAuthorities);
+        this.roles = defaultEmptyListIfNull(roles);
     }
 
     public static InspAuthentication createHighestAuth(String id) {
-        final List<String> emptyList = Collections.emptyList();
-        final InspAuthentication authentication = new InspAuthentication(id, emptyList,
-                emptyList);
+        final InspAuthentication authentication = new InspAuthentication(id, null, null);
         authentication.setHighestAuth(true);
         return authentication;
+    }
+
+    private List<String> defaultEmptyListIfNull(List<String> source) {
+        return null == source ? Collections.emptyList() : source;
     }
 
 }

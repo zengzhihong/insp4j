@@ -29,7 +29,7 @@ public interface InspContext extends Serializable {
     /**
      * default groupName
      *
-     * @return
+     * @return authentication pojo
      */
     default InspAuthentication getAuthentication() {
         return getAuthentication(InspConst.DEFAULT_GROUP_NAME);
@@ -39,7 +39,7 @@ public interface InspContext extends Serializable {
      * get by groupName
      *
      * @param groupName
-     * @return
+     * @return authentication pojo
      */
     InspAuthentication getAuthentication(String groupName);
 

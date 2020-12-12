@@ -25,9 +25,9 @@ import java.lang.reflect.Method;
 @AllArgsConstructor
 public class InspExpressionInvocationHandler implements InvocationHandler {
 
-    private InspExpressionOperations operations;
-    private InspInterceptor inspInterceptor;
-    private InspMetadataSource metadataSource;
+    private final InspExpressionOperations operations;
+    private final InspInterceptor inspInterceptor;
+    private final InspMetadataSource metadataSource;
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {

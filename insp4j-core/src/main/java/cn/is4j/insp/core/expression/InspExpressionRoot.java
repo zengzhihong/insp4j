@@ -55,6 +55,16 @@ public class InspExpressionRoot implements InspExpressionOperations {
         return matches(false, authentication.getDataAuthorities(), dataAuthorities);
     }
 
+    @Override
+    public boolean hasRole(String[] roles) {
+        return matches(true, authentication.getRoles(), roles);
+    }
+
+    @Override
+    public boolean hasAnyRole(String[] roles) {
+        return matches(false, authentication.getRoles(), roles);
+    }
+
     private boolean matches(boolean allMatches, List<String> authenticationAuthorities,
                             String... inspAuthorities) {
         if (authentication.isHighestAuth()) {

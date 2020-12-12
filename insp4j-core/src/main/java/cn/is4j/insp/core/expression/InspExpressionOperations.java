@@ -30,7 +30,7 @@ public interface InspExpressionOperations {
      *
      * @param funcAuthorities
      * @param dataAuthorities
-     * @return
+     * @return process result true or false
      */
     boolean hasFuncData(String[] funcAuthorities, String[] dataAuthorities);
 
@@ -38,7 +38,7 @@ public interface InspExpressionOperations {
      * multiple function authorities
      *
      * @param funcAuthorities
-     * @return
+     * @return process result true or false
      */
     boolean hasFunc(String[] funcAuthorities);
 
@@ -46,7 +46,7 @@ public interface InspExpressionOperations {
      * matched any one function authority
      *
      * @param funcAuthorities
-     * @return
+     * @return process result true or false
      */
     boolean hasAnyFunc(String[] funcAuthorities);
 
@@ -54,7 +54,7 @@ public interface InspExpressionOperations {
      * multiple data authorities
      *
      * @param dataAuthorities
-     * @return
+     * @return process result true or false
      */
     boolean hasData(String[] dataAuthorities);
 
@@ -62,7 +62,23 @@ public interface InspExpressionOperations {
      * matched any one data authority
      *
      * @param dataAuthorities
-     * @return
+     * @return process result true or false
      */
     boolean hasAnyData(String[] dataAuthorities);
+
+    /**
+     * multiple roles
+     *
+     * @param roles
+     * @return process result true or false
+     */
+    boolean hasRole(String[] roles);
+
+    /**
+     * matched any one role
+     *
+     * @param roles
+     * @return process result true or false
+     */
+    boolean hasAnyRole(String[] roles);
 }

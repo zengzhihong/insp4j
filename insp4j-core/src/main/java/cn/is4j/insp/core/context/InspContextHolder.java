@@ -36,7 +36,7 @@ public class InspContextHolder {
     /**
      * Primarily for troubleshooting purposes, this method shows how many times the class
      *
-     * @return
+     * @return initializeCount
      */
     public static int getInitializeCount() {
         return initializeCount;
