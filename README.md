@@ -32,7 +32,7 @@ insp4j没有实现用户认证、授权，更没涉及到数据库层面上的�
 <!-- Servlet ->
 <dependency>
     <groupId>cn.is4j.insp</groupId>
-    <artifactId>insp4j-web</artifactId>
+    <artifactId>insp4j-web-spring-boot-starter</artifactId>
     <version>${latest.version}</version>
 </dependency>
 ```
@@ -41,7 +41,7 @@ insp4j没有实现用户认证、授权，更没涉及到数据库层面上的�
 <!-- Reactive ->
 <dependency>
     <groupId>cn.is4j.insp</groupId>
-    <artifactId>insp4j-reactive</artifactId>
+    <artifactId>insp4j-reactive-spring-boot-starter</artifactId>
     <version>${latest.version}</version>
 </dependency>
 ```
