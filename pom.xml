@@ -29,12 +29,12 @@
 
     <groupId>cn.is4j.insp</groupId>
     <artifactId>insp4j</artifactId>
-    <version>1.1.3</version>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>insp4j-core</module>
-        <module>insp4j-web</module>
-        <module>insp4j-reactive</module>
+        <module>insp4j-web-spring-boot-starter</module>
+        <module>insp4j-reactive-spring-boot-starter</module>
     </modules>
 
 

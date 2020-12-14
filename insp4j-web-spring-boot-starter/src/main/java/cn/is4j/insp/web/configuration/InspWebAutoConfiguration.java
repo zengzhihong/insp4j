@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package cn.is4j.insp.reactive.configuration;
+package cn.is4j.insp.web.configuration;
 
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
 import cn.is4j.insp.core.intercept.aopalliance.InspAnnotationBeanPostProcessor;
-import cn.is4j.insp.reactive.filter.ReactiveRequestContextFilter;
-import cn.is4j.insp.reactive.intercept.aopalliance.MethodInspReactiveInterceptor;
+import cn.is4j.insp.web.intercept.aopalliance.MethodInspWebInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -29,9 +28,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author zengzhihong
  */
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @Configuration
-public class InspReactiveConfiguration {
+public class InspWebAutoConfiguration {
 
     private InspExceptionTranslator inspExceptionTranslator;
 
@@ -40,20 +39,16 @@ public class InspReactiveConfiguration {
         this.inspExceptionTranslator = inspExceptionTranslator;
     }
 
-    @Bean
-    public ReactiveRequestContextFilter reactiveRequestContextFilter() {
-        return new ReactiveRequestContextFilter();
-    }
 
     @Bean
     @ConditionalOnMissingBean
-    public MethodInspReactiveInterceptor methodInspInterceptor() {
-        return new MethodInspReactiveInterceptor(inspExceptionTranslator);
+    public MethodInspWebInterceptor methodInspInterceptor() {
+        return new MethodInspWebInterceptor(inspExceptionTranslator);
     }
 
     @Bean
     public InspAnnotationBeanPostProcessor inspAnnotationBeanPostProcessor(
-            MethodInspReactiveInterceptor methodInspWebInterceptor) {
+            MethodInspWebInterceptor methodInspWebInterceptor) {
         return new InspAnnotationBeanPostProcessor(methodInspWebInterceptor);
     }
 
