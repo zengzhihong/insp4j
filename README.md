@@ -37,21 +37,21 @@ insp4j没有实现用户认证、授权，更没涉及到数据库层面上的�
 * 导包
 
 ```xml
-<!-- Servlet ->
-<dependency>
-    <groupId>cn.is4j.insp</groupId>
-    <artifactId>insp4j-web-spring-boot-starter</artifactId>
-    <version>${latest.version}</version>
-</dependency>
-```
 
-```xml
-<!-- Reactive ->
-<dependency>
-    <groupId>cn.is4j.insp</groupId>
-    <artifactId>insp4j-reactive-spring-boot-starter</artifactId>
-    <version>${latest.version}</version>
-</dependency>
+<dependencies>
+    <!-- 如果是Servlet项目则引入 -->
+    <dependency>
+        <groupId>cn.is4j.insp</groupId>
+        <artifactId>insp4j-web-spring-boot-starter</artifactId>
+        <version>${latest.version}</version>
+    </dependency>
+    <!-- 如果是Reactive项目则引入 -->
+    <dependency>
+        <groupId>cn.is4j.insp</groupId>
+        <artifactId>insp4j-reactive-spring-boot-starter</artifactId>
+        <version>${latest.version}</version>
+    </dependency>
+</dependencies>
 ```
 
 * 配置
