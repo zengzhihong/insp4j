@@ -1,16 +1,25 @@
-
-# insp4j轻量级权限框架
-
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Maven](https://img.shields.io/maven-central/v/cn.is4j.insp/insp4j)](https://search.maven.org/search?q=insp)
-[![Github](https://img.shields.io/github/stars/zengzhihong/insp4j?style=social)](https://github.com/zengzhihong/insp4j)
-[![Gitee](https://gitee.com/zengzhihong/insp4j/badge/star.svg?theme=dark)](https://gitee.com/zengzhihong/insp4j)
-
-**QQ群：336752559**
+<p align="center">
+  <img src="https://s3.ax1x.com/2021/02/01/yZxwN9.png" border="0" />
+</p>
+<p align="center">
+  <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">
+    <img src="https://img.shields.io/badge/license-Apache%202-green.svg" />
+  </a>
+  <a href="https://search.maven.org/search?q=insp" target="_blank">
+    <img src="https://img.shields.io/maven-central/v/cn.is4j.insp/insp4j" />
+  </a>
+  <a href="https://github.com/zengzhihong/insp4j" target="_blank">
+    <img src="https://img.shields.io/github/stars/zengzhihong/insp4j?style=social" />
+  </a>
+  <a href="https://gitee.com/zengzhihong/insp4j" target="_blank">
+    <img src="https://gitee.com/zengzhihong/insp4j/badge/star.svg?theme=dark" />
+  </a>
+</p>
+<p align="center"><strong>QQ群：336752559</strong></p>
 
 ## 简介
 
-* insp4j为inspector的缩写，中文含义检查员。 
+* insp4j为inspector的缩写，中文含义检查员。
 * 基于Spring-EL、AOP，更加灵活易用的权限控制框架，支持权限分组，可用于一套系统多种权限隔离校验，使用简单、易于扩展，支持Servlet、Reactive。
 * 参考了SpringSecurity、Expression的设计，定制扩展灵活。
 
@@ -23,12 +32,11 @@
 insp4j就是抽象了一个group，把每个不同的子系统的权限设计区分隔离，不同的group，不同的用户、操作权限、数据权限，这些信息统一封装在InspAuthentication，需要业务系统来构造。<br>
 insp4j没有实现用户认证、授权，更没涉及到数据库层面上的数据范围过滤，只对业务系统构造的InspAuthentication、@Insp注解上定义的权限标识基于AOP实现拦截校验，是轻量级的权限控制实现。
 
-
 ## 快速开始
 
 * 导包
 
-```
+```xml
 <!-- Servlet ->
 <dependency>
     <groupId>cn.is4j.insp</groupId>
@@ -37,7 +45,7 @@ insp4j没有实现用户认证、授权，更没涉及到数据库层面上的�
 </dependency>
 ```
 
-```
+```xml
 <!-- Reactive ->
 <dependency>
     <groupId>cn.is4j.insp</groupId>
@@ -67,13 +75,13 @@ public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationSe
     public InspAuthentication loadAuthentication(HttpServletRequest httpServletRequest, InspMetadataSource metadataSource) {
         // groupName可以用来做用户/权限隔离
         // 如系统用户在sys_user表,权限在sys_authorities表，一般用户（商户）在biz_merchant表，权限在biz_merchant_authorities表
-        if("system".equals(metadataSource.getGroupName())){
+        if ("system".equals(metadataSource.getGroupName())) {
             String userId = SecurityUtil.getUserId();
             List<String> funcAuthorities = SecurityUtil.getUser().getAuthorities();
             List<String> dataAuthorities = deptService.listDeptId();
             return new InspAuthentication(userId, funcAuthorities, dataAuthorities);
         }
-        if("merchant".equals(metadataSource.getGroupName())){
+        if ("merchant".equals(metadataSource.getGroupName())) {
             String userId = merchantService.getIdByToken(httpServletRequest.getHeader("token"));
             List<String> funcAuthorities = merchantService.listFuncAuthorities(userId);
             List<String> dataAuthorities = merchantService.listDataAuthorities(userId);
@@ -87,6 +95,7 @@ public class InspWebAuthenticationServiceImpl implements InspWebAuthenticationSe
 * 使用
 
 ```java
+
 @RestController
 @RequestMapping("/dept")
 public class DeptController {
@@ -105,6 +114,7 @@ public class DeptController {
     public R<?> updateById(@RequestParam Long id) {
         return ok();
     }
+
     // 权限分组 业务系统/运营系统 可能用户账号体系不一样，权限体系也是分开设计的，就需要用到groupName来实现分组
     // 一个分组可以单独一套用户/权限
     @Insp(value = "hasFuncData('dept:delete',#id)", groupName = "system")
@@ -115,12 +125,16 @@ public class DeptController {
 
 }
 ```
+
 * 异常
 
-    没有权限时默认异常,可定制
-    
+  没有权限时默认异常,可定制
+
 ```json
-{"code":403,"message":"deny of access"}
+{
+  "code": 403,
+  "message": "deny of access"
+}
 ```
 
 ## 计划
@@ -135,6 +149,6 @@ public class DeptController {
 当下主要是解决我们项目里各种系统权限控制不统一，每个子系统不同小组在开发，各自做各自的，增加一个子系统就要做一套权限，没有统一模式。<br>
 
 ## 开源协议
- 
+
 This project is licensed under the Apache-2.0 License - see the [LICENSE.md](LICENSE.md) file for details
  
