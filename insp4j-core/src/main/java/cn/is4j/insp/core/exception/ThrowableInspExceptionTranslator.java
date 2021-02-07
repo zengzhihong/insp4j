@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author zengzhihong
  */
 @Slf4j
-public class ThrowableInsExceptionTranslator implements InspExceptionTranslator {
+public class ThrowableInspExceptionTranslator implements InspExceptionTranslator {
     @Override
     public Object translate(InspException e) {
         log.error("insp exception", e);

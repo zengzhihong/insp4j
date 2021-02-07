@@ -20,7 +20,7 @@ import cn.is4j.insp.core.annotation.Insp;
 import cn.is4j.insp.core.context.InspContextHolder;
 import cn.is4j.insp.core.exception.InspException;
 import cn.is4j.insp.core.exception.InspExceptionTranslator;
-import cn.is4j.insp.core.exception.ThrowableInsExceptionTranslator;
+import cn.is4j.insp.core.exception.ThrowableInspExceptionTranslator;
 import cn.is4j.insp.core.exception.UnAuthenticationInspException;
 import cn.is4j.insp.core.expression.DefaultMethodInspExpressionHandler;
 import cn.is4j.insp.core.expression.InspExpressionHandler;
@@ -62,7 +62,7 @@ public abstract class AbstractInspInterceptor
     private BeanResolver br;
 
     public AbstractInspInterceptor() {
-        this.exceptionTranslator = new ThrowableInsExceptionTranslator();
+        this.exceptionTranslator = new ThrowableInspExceptionTranslator();
     }
 
 
