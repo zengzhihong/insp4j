@@ -151,4 +151,9 @@ public class DeptController {
 ## 开源协议
 
 This project is licensed under the Apache-2.0 License - see the [LICENSE.md](LICENSE.md) file for details
- 
+
+## 鸣谢
+
+感谢 JetBrains 提供的免费开源 License：
+
+[![JetBrains](docs/img/jetbrains.png)](https://www.jetbrains.com/?from=insp4j)
