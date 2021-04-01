@@ -48,4 +48,9 @@ public @interface Insp {
      */
     String groupName() default "default";
 
+    /**
+     * @return Spring-EL
+     */
+    String attr() default "";
+
 }

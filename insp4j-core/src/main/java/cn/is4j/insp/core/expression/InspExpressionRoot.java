@@ -17,6 +17,7 @@
 package cn.is4j.insp.core.expression;
 
 import cn.is4j.insp.core.service.InspAuthentication;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import java.util.List;
 /**
  * @author zengzhihong
  */
+@AllArgsConstructor
 public class InspExpressionRoot implements InspExpressionOperations {
 
     @Setter

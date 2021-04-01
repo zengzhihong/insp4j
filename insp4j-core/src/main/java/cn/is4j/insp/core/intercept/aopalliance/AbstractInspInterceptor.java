@@ -76,13 +76,19 @@ public abstract class AbstractInspInterceptor
                 }
                 MethodInspEvaluationContext ctx = (MethodInspEvaluationContext) expressionHandler
                         .createEvaluationContext(invocation);
+                ctx.setBeanResolver(br);
+                if (StringUtils.hasText(metadataSource.getAttrExpressionString())) {
+                    final Object attrValue =
+                            expressionHandler.getExpressionParser().parseExpression(metadataSource.getAttrExpressionString()).getValue(ctx);
+                    metadataSource.setAttrExpressionValue(attrValue);
+                }
+
                 final InspExpressionOperations expressionOperations = (InspExpressionOperations) Proxy
                         .newProxyInstance(InspExpressionRoot.class.getClassLoader(),
                                 InspExpressionRoot.class.getInterfaces(),
-                                new InspExpressionInvocationHandler(
-                                        new InspExpressionRoot(), this, metadataSource));
+                                new InspExpressionInvocationHandler(this, metadataSource));
                 ctx.setRootObject(expressionOperations);
-                ctx.setBeanResolver(br);
+
                 // do invoke
                 final Boolean expressionValue = expressionHandler.getExpressionParser()
                         .parseExpression(metadataSource.getExpressionString())
@@ -117,12 +123,16 @@ public abstract class AbstractInspInterceptor
                 Insp.class);
         List<InspMetadataSource> metadataSources = new ArrayList<>();
         if (onClass != null) {
-            metadataSources
-                    .add(new InspMetadataSource(onClass.groupName(), onClass.value()));
+            final InspMetadataSource onClassInspMetadataSource = new InspMetadataSource(onClass.groupName(),
+                    onClass.value());
+            onClassInspMetadataSource.setAttrExpressionString(onClass.attr());
+            metadataSources.add(onClassInspMetadataSource);
         }
         if (onMethod != null) {
-            metadataSources
-                    .add(new InspMetadataSource(onMethod.groupName(), onMethod.value()));
+            final InspMetadataSource onMethodInspMetadataSource = new InspMetadataSource(onMethod.groupName(),
+                    onMethod.value());
+            onMethodInspMetadataSource.setAttrExpressionString(onMethod.attr());
+            metadataSources.add(onMethodInspMetadataSource);
         }
         return metadataSources;
     }

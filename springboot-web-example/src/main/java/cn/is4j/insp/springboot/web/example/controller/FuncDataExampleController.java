@@ -92,7 +92,7 @@ public class FuncDataExampleController {
      * @param shopId
      * @return
      */
-    @Insp(value = "hasFunc('user:list') && hasFunc('user:get') && hasData(#shopId)")
+    @Insp(value = "hasFunc('user:list') && hasFunc('user:get') && hasData(#shopId)", attr = "{#shopId,#shopId}")
     @RequestMapping("/listUser6")
     public String listUser6(Long shopId) {
         return "ok6";

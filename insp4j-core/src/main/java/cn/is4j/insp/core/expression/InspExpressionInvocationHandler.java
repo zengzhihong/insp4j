@@ -25,14 +25,13 @@ import java.lang.reflect.Method;
 @AllArgsConstructor
 public class InspExpressionInvocationHandler implements InvocationHandler {
 
-    private final InspExpressionOperations operations;
     private final InspInterceptor inspInterceptor;
     private final InspMetadataSource metadataSource;
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         metadataSource.setExpressionArgs(args);
-        operations.setAuthentication(inspInterceptor.onAuthentication(metadataSource));
+        InspExpressionOperations operations = new InspExpressionRoot(inspInterceptor.onAuthentication(metadataSource));
         return method.invoke(operations, args);
     }
 }

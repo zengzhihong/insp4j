@@ -30,7 +30,15 @@ public class InspMetadataSource {
 
     private String expressionString;
 
+    /**
+     * deprecated at @since 2.x
+     */
+    @Deprecated
     private Object[] expressionArgs;
+
+    private String attrExpressionString;
+
+    private Object attrExpressionValue;
 
     public InspMetadataSource(String groupName, String expressionString) {
         this.groupName = groupName;
