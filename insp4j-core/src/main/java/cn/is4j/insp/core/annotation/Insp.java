@@ -49,6 +49,8 @@ public @interface Insp {
     String groupName() default "default";
 
     /**
+     * expression attr transparent transmission
+     *
      * @return Spring-EL
      */
     String attr() default "";

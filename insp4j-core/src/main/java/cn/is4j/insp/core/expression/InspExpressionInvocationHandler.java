@@ -30,6 +30,7 @@ public class InspExpressionInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // todo deprecated on 2.x
         metadataSource.setExpressionArgs(args);
         InspExpressionOperations operations = new InspExpressionRoot(inspInterceptor.onAuthentication(metadataSource));
         return method.invoke(operations, args);

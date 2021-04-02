@@ -31,7 +31,7 @@ public class InspMetadataSource {
     private String expressionString;
 
     /**
-     * deprecated at @since 2.x
+     * deprecated on @since 2.x
      */
     @Deprecated
     private Object[] expressionArgs;
